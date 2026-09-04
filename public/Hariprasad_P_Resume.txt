@@ -1,0 +1,31 @@
+# HARIPRASAD P
+Full Stack Developer | AI Solutions Enthusiast
+Email: hariprasad@gmail.com | Phone: +91 8807650205
+GitHub: https://github.com/hariprasad8760-debug
+LinkedIn: https://www.linkedin.com/in/hariprasad-p-622417292
+
+==================================================
+PROFESSIONAL SUMMARY
+Dynamic, result-oriented Full Stack Developer with specialized focus on building high-performance, responsive, and intuitive web applications. Experienced in combining robust backend engineering with AI capabilities and precision UI/UX design.
+
+==================================================
+EDUCATION
+K.S.R College of Engineering
+Bachelor of Technology in Information Technology
+CGPA: 7.5
+
+==================================================
+EXPERIENCE
+AZHIZEN — AI-Powered Web Development Intern
+- Developed AI-powered web applications and modernized frontend/backend architectures.
+- Integrated AI workflows and optimized RESTful services.
+
+STACK QUEUE — UI/UX Design Intern
+- Crafted user-centric web interface components, wireframes, and prototypes.
+- Applied responsive design systems and optimized design-to-code workflows.
+
+==================================================
+TECHNICAL ARSENAL
+- Languages: Java, Python, JavaScript, TypeScript, SQL, HTML5, CSS3
+- Frameworks & Libraries: React, Next.js, Node.js, Express, Framer Motion
+- Tools & Platforms: Git, GitHub, REST APIs, PostgreSQL, VS Code
