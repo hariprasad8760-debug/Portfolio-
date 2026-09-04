@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Hariprasad P', url: 'https://github.com/hariprasad8760-debug' }],
   openGraph: {
     title: 'Hariprasad P | Futuristic Full Stack & AI Developer',
-    description: 'BUILD. INNOVATE. ELEVATE. Crafting digital experiences where intelligent ideas meet elegant engineering.',
+    description: 'Build. Break. Better. Where ideas become intelligent digital experiences.',
     type: 'website',
   },
 };

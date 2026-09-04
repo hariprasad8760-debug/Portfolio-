@@ -3,19 +3,17 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import {
-  ArrowDown,
   ArrowDownToLine,
   ArrowUp,
   ArrowUpRight,
   Award,
   BadgeCheck,
+  BarChart3,
   Briefcase,
+  Check,
   ChevronDown,
   Code2,
   Copy,
-  Check,
-  Cpu,
-  ExternalLink,
   FolderGit2,
   Github,
   GraduationCap,
@@ -28,29 +26,28 @@ import {
   Send,
   Sparkles,
   Terminal,
+  TrendingUp,
   User,
-  X
 } from 'lucide-react';
 
 /* =========================================================================
-   TYPES & DATA DEFINITIONS
+   DROPDOWN DIRECTORY DATA (MATCHING USER'S MOCKUP)
 ========================================================================= */
 
-interface DropdownItem {
+interface MenuItem {
   id: string;
   name: string;
-  desc: string;
   icon: React.ReactNode;
 }
 
-const NAV_ITEMS: DropdownItem[] = [
-  { id: 'home', name: 'Home', desc: 'Apex Overview & Hero', icon: <HomeIcon size={18} /> },
-  { id: 'about', name: 'About Me', desc: 'Engineering Philosophy', icon: <User size={18} /> },
-  { id: 'skills', name: 'Skills', desc: 'Tech Stack & Arsenal', icon: <Cpu size={18} /> },
-  { id: 'projects', name: 'Projects', desc: 'Selected Builds & Labs', icon: <FolderGit2 size={18} /> },
-  { id: 'experience', name: 'Experience', desc: 'Internships & History', icon: <Briefcase size={18} /> },
-  { id: 'certifications', name: 'Certifications', desc: 'Verified Credentials', icon: <Award size={18} /> },
-  { id: 'contact', name: 'Contact', desc: 'Direct Inquiries & Ping', icon: <Mail size={18} /> },
+const MENU_ITEMS: MenuItem[] = [
+  { id: 'home', name: 'Home', icon: <HomeIcon size={18} /> },
+  { id: 'about', name: 'About Me', icon: <User size={18} /> },
+  { id: 'skills', name: 'Skills', icon: <Code2 size={18} /> },
+  { id: 'projects', name: 'Projects', icon: <Briefcase size={18} /> },
+  { id: 'experience', name: 'Experience', icon: <TrendingUp size={18} /> },
+  { id: 'certifications', name: 'Certifications', icon: <Award size={18} /> },
+  { id: 'contact', name: 'Contact', icon: <Send size={18} /> },
 ];
 
 interface SkillCategory {
@@ -94,11 +91,9 @@ const SKILL_CATEGORIES: SkillCategory[] = [
 interface Project {
   title: string;
   category: string;
-  tagline: string;
   desc: string;
   tags: string[];
   githubUrl: string;
-  liveUrl: string;
   metric: string;
 }
 
@@ -106,127 +101,41 @@ const PROJECTS: Project[] = [
   {
     title: 'Aegis AI Web Engine',
     category: 'Intelligent Systems · Full Stack',
-    tagline: 'Autonomous AI orchestration & agentic workflows',
     desc: 'An AI-powered web platform engineered to automate complex enterprise workflows, processing multi-modal user prompts with dynamic reactive frontend visualization and low-latency API handling.',
-    tags: ['Next.js', 'Python', 'AI / LLM', 'TypeScript', 'Tailwind'],
+    tags: ['Next.js', 'Python', 'AI / LLM', 'TypeScript'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
-    liveUrl: '#contact',
     metric: 'Sub-150ms Latency',
   },
   {
     title: 'Nexus Data Dashboard',
     category: 'Telemetry & Analytics · Enterprise',
-    tagline: 'Real-time telemetry and data streams visualization',
-    desc: 'High-throughput analytics console featuring predictive analytics, real-time metrics charting, resilient session caching, and dark obsidian data presentation layers.',
-    tags: ['React', 'JavaScript', 'SQL', 'Charts.js', 'Node.js'],
+    desc: 'High-throughput analytics console featuring predictive metrics charting, resilient session caching, and dark obsidian data presentation layers.',
+    tags: ['React', 'JavaScript', 'SQL', 'Node.js'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
-    liveUrl: '#contact',
     metric: '99.9% Uptime',
   },
   {
     title: 'Pulse Design System',
     category: 'Interface Engineering · Design Systems',
-    tagline: 'Futuristic component library & micro-interaction engine',
     desc: 'A bespoke design language and component architecture built around glassmorphism, fluid physics, accessible contrast, and tactile feedback for modern digital products.',
-    tags: ['CSS3', 'Framer Motion', 'React', 'Figma', 'UI/UX'],
+    tags: ['CSS3', 'Framer Motion', 'React', 'UI/UX'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
-    liveUrl: '#contact',
     metric: '60 FPS Micro-FX',
   },
   {
     title: 'OmniSecure API Gateway',
     category: 'Backend & Infrastructure · Security',
-    tagline: 'High-concurrency authentication and rate-limiting gateway',
     desc: 'Resilient backend authentication hub and API proxy supporting encrypted session tokens, dynamic rate throttling, and relational data query optimization.',
-    tags: ['Java', 'SQL', 'Node.js', 'REST APIs', 'PostgreSQL'],
+    tags: ['Java', 'SQL', 'Node.js', 'REST APIs'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
-    liveUrl: '#contact',
     metric: 'Enterprise Scalable',
   },
 ];
 
-interface ExperienceItem {
-  company: string;
-  role: string;
-  period: string;
-  location: string;
-  summary: string;
-  highlights: string[];
-  tech: string[];
-}
-
-const EXPERIENCES: ExperienceItem[] = [
-  {
-    company: 'AZHIZEN',
-    role: 'AI-Powered Web Development Intern',
-    period: '16 JUN 2025 — 30 JUN 2025',
-    location: 'Hybrid / Remote',
-    summary: 'Spearheaded full-stack application development enriched with artificial intelligence capabilities, streamlining dynamic interfaces and backend services.',
-    highlights: [
-      'Engineered responsive web interfaces integrated with AI-driven models and real-time backend API endpoints.',
-      'Optimized client-side rendering pipelines and data parsing mechanisms for enhanced throughput and usability.',
-      'Collaborated on architectural design reviews and continuous testing workflows using modern development practices.',
-    ],
-    tech: ['AI Integration', 'React', 'Python', 'Node.js', 'REST APIs'],
-  },
-  {
-    company: 'STACK QUEUE',
-    role: 'UI/UX Design Intern',
-    period: '10 JUL 2024 — 24 JUL 2024',
-    location: 'Design Studio',
-    summary: 'Focused on digital design systems, user-centric usability architectures, wireframing, and creating high-fidelity interactive web prototypes.',
-    highlights: [
-      'Conducted design heuristic evaluations and implemented frictionless navigation layouts for modern web tools.',
-      'Developed interactive design prototypes translating complex specifications into elegant glass-styled layouts.',
-      'Coordinated between design handoffs and frontend development teams to ensure pixel-perfect fidelity.',
-    ],
-    tech: ['UI/UX Systems', 'Figma', 'Prototyping', 'Design Thinking', 'Wireframing'],
-  },
-];
-
-interface Certification {
-  title: string;
-  issuer: string;
-  skills: string[];
-  verifiedDate: string;
-  credentialId: string;
-}
-
-const CERTIFICATIONS: Certification[] = [
-  {
-    title: 'Full Stack Web Development & Architecture',
-    issuer: 'Professional Development Series',
-    skills: ['React', 'Node.js', 'REST APIs', 'SQL Database Design'],
-    verifiedDate: '2025',
-    credentialId: 'VER-HP-78902',
-  },
-  {
-    title: 'AI-Driven Application Engineering',
-    issuer: 'Azhizen Tech Specialization',
-    skills: ['AI Model Integration', 'Prompt Architecture', 'Python Web Apps'],
-    verifiedDate: '2025',
-    credentialId: 'AZH-AI-4421',
-  },
-  {
-    title: 'Advanced Java & Object-Oriented Design',
-    issuer: 'Engineering Competency Board',
-    skills: ['Java Core', 'Data Structures', 'Design Patterns'],
-    verifiedDate: '2024',
-    credentialId: 'JAVA-ENG-1092',
-  },
-  {
-    title: 'Human-Centered UI/UX Interface Design',
-    issuer: 'Stack Queue Design Labs',
-    skills: ['Design Systems', 'Micro-Interactions', 'User Research'],
-    verifiedDate: '2024',
-    credentialId: 'SQ-UX-8812',
-  },
-];
-
 /* =========================================================================
-   ANIMATED PARTICLES / FLOWING WINE LIGHT CANVAS COMPONENT
+   SILKY FLOWING WINE RIBBON & AURORA CANVAS COMPONENT
 ========================================================================= */
-function AmbientCanvas() {
+function SilkyRibbonCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -247,52 +156,82 @@ function AmbientCanvas() {
 
     window.addEventListener('resize', onResize);
 
-    // Particle count: 35 particles for lightweight, silky 60fps performance
-    const count = 36;
-    const particles = Array.from({ length: count }, () => ({
+    let step = 0;
+
+    // Subtle moving wine-red dots ("not much", elegant and glowing)
+    const redDots = Array.from({ length: 18 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 0.45,
       vy: (Math.random() - 0.5) * 0.45,
-      radius: Math.random() * 2 + 1,
-      alpha: Math.random() * 0.6 + 0.2,
+      radius: Math.random() * 1.8 + 1.2,
+      baseAlpha: Math.random() * 0.4 + 0.35,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: Math.random() * 0.02 + 0.015,
     }));
 
     const render = () => {
+      step += 0.006;
       ctx.clearRect(0, 0, width, height);
 
-      // Render flowing wine-red particles and connections
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-        if (p.y > height) p.y = 0;
-
+      // Render glowing silky wave ribbons
+      const drawRibbon = (offsetY: number, amplitude: number, speed: number, alpha: number, color: string) => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(230, 30, 79, ${p.alpha * 0.7})`;
+        ctx.moveTo(0, height * offsetY);
+
+        for (let x = 0; x <= width; x += 15) {
+          const y =
+            height * offsetY +
+            Math.sin(x * 0.0025 + step * speed) * amplitude +
+            Math.cos(x * 0.0018 + step * 0.7) * (amplitude * 0.5);
+          ctx.lineTo(x, y);
+        }
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.shadowColor = 'rgba(230, 27, 77, 0.4)';
+        ctx.shadowBlur = 15;
+        ctx.globalAlpha = alpha;
+        ctx.stroke();
+      };
+
+      // 3 overlapping wine-red light streams (matching image backdrop waves)
+      drawRibbon(0.28, 45, 1.2, 0.35, 'rgba(230, 27, 77, 0.6)');
+      drawRibbon(0.32, 55, 0.9, 0.25, 'rgba(255, 59, 104, 0.5)');
+      drawRibbon(0.36, 40, 1.4, 0.2, 'rgba(160, 16, 50, 0.4)');
+      drawRibbon(0.75, 50, 1.0, 0.18, 'rgba(230, 27, 77, 0.3)');
+
+      // Render subtle floating wine-red dots with soft outer glow
+      for (let i = 0; i < redDots.length; i++) {
+        const dot = redDots[i];
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+        dot.pulse += dot.pulseSpeed;
+
+        if (dot.x < 0) dot.x = width;
+        if (dot.x > width) dot.x = 0;
+        if (dot.y < 0) dot.y = height;
+        if (dot.y > height) dot.y = 0;
+
+        const currentAlpha = dot.baseAlpha + Math.sin(dot.pulse) * 0.2;
+
+        // Soft outer ambient halo
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius * 3.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(230, 27, 77, ${currentAlpha * 0.2})`;
         ctx.fill();
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(180, 20, 56, ${0.18 * (1 - dist / 130)})`;
-            ctx.lineWidth = 0.75;
-            ctx.stroke();
-          }
-        }
+        // Vivid glowing red dot core
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 45, 90, ${currentAlpha})`;
+        ctx.shadowColor = 'rgba(230, 27, 77, 0.85)';
+        ctx.shadowBlur = 8;
+        ctx.fill();
       }
+
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
 
       animId = requestAnimationFrame(render);
     };
@@ -306,27 +245,31 @@ function AmbientCanvas() {
   }, []);
 
   return (
-    <div className="ambient-background" aria-hidden="true">
-      <canvas ref={canvasRef} className="ambient-canvas" />
-      <div className="ambient-glow-1" />
-      <div className="ambient-glow-2" />
-      <div className="ambient-glow-3" />
-      <div className="ambient-grid" />
+    <div className="ambient-container" aria-hidden="true">
+      <canvas ref={canvasRef} className="aurora-canvas" />
+      <div className="ambient-nebula-1" />
+      <div className="ambient-nebula-2" />
+      <div className="ambient-nebula-3" />
+      {/* Delicate floating background twinkle particles */}
+      <span className="sparkle-particle" style={{ top: '18%', left: '12%' }} />
+      <span className="sparkle-particle" style={{ top: '25%', right: '18%', animationDelay: '1.2s' }} />
+      <span className="sparkle-particle" style={{ top: '65%', left: '22%', animationDelay: '2.4s' }} />
+      <span className="sparkle-particle" style={{ top: '78%', right: '14%', animationDelay: '0.8s' }} />
     </div>
   );
 }
 
 /* =========================================================================
-   3D TILT INTERACTIVE BADGE
+   INTERACTIVE 3D DEV CARD
 ========================================================================= */
 function InteractiveDevBadge() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-150, 150], [9, -9]);
-  const rotateY = useTransform(x, [-150, 150], [-9, 9]);
+  const rotateX = useTransform(y, [-150, 150], [8, -8]);
+  const rotateY = useTransform(x, [-150, 150], [-8, 8]);
 
-  const springConfig = { stiffness: 200, damping: 20 };
+  const springConfig = { stiffness: 180, damping: 20 };
   const smoothRx = useSpring(rotateX, springConfig);
   const smoothRy = useSpring(rotateY, springConfig);
 
@@ -344,50 +287,50 @@ function InteractiveDevBadge() {
   };
 
   return (
-    <div className="hero-card-container">
+    <div className="hero-card-perspective">
       <motion.div
-        className="hero-interactive-card"
+        className="hero-telemetry-box"
         style={{ rotateX: smoothRx, rotateY: smoothRy }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="card-top-bar">
-          <div className="terminal-dots">
-            <span className="terminal-dot red" />
-            <span className="terminal-dot yellow" />
-            <span className="terminal-dot green" />
+        <div className="card-spec-bar">
+          <div className="terminal-pip-group">
+            <span className="pip wine" />
+            <span className="pip muted" />
+            <span className="pip muted" />
           </div>
-          <span className="card-badge-tag">ENGINEER // VERIFIED</span>
+          <span className="card-spec-tag">FULL STACK // VERIFIED</span>
         </div>
 
-        <div className="hero-avatar-area">
-          <div className="avatar-ring" />
-          <div className="avatar-glow" />
-          <div className="avatar-monogram">
+        <div className="telemetry-avatar-stage">
+          <div className="stage-rotating-orbit" />
+          <div className="stage-wine-halo" />
+          <div className="stage-monogram">
             H<span>P</span>
           </div>
         </div>
 
-        <div className="card-dev-info">
-          <h3 className="card-dev-name">Hariprasad P</h3>
-          <p className="card-dev-tagline">Full Stack Developer & AI Innovator</p>
+        <div className="telemetry-meta">
+          <h3 className="telemetry-name">Hariprasad P</h3>
+          <p className="telemetry-role">Full Stack Developer &amp; AI Architect</p>
         </div>
 
-        <div className="card-pills-row">
-          <span className="tech-mini-pill">Java</span>
-          <span className="tech-mini-pill">Python</span>
-          <span className="tech-mini-pill">Next.js</span>
-          <span className="tech-mini-pill">TypeScript</span>
-          <span className="tech-mini-pill">SQL</span>
-          <span className="tech-mini-pill">UI/UX</span>
+        <div className="telemetry-pills-wrap">
+          <span className="telemetry-pill">Java</span>
+          <span className="telemetry-pill">Python</span>
+          <span className="telemetry-pill">React</span>
+          <span className="telemetry-pill">Next.js</span>
+          <span className="telemetry-pill">SQL</span>
+          <span className="telemetry-pill">UI/UX</span>
         </div>
 
-        <div className="card-status-box">
-          <div className="status-left">
-            <span className="status-beacon" />
-            <span>Availability Status</span>
+        <div className="telemetry-pulse-status">
+          <div>
+            <span className="status-beacon-live" />
+            <span style={{ color: 'var(--text-muted)' }}>Status:</span> Open for Roles
           </div>
-          <span className="status-val">Open for Roles</span>
+          <span style={{ color: 'var(--wine-light)', fontWeight: 600 }}>Available</span>
         </div>
       </motion.div>
     </div>
@@ -395,7 +338,7 @@ function InteractiveDevBadge() {
 }
 
 /* =========================================================================
-   MAIN PORTFOLIO APPLICATION COMPONENT
+   PORTFOLIO PAGE COMPONENT
 ========================================================================= */
 export default function PortfolioPage() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -408,16 +351,15 @@ export default function PortfolioPage() {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // Scroll detection for navbar blur and back to top
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 40);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Click outside dropdown handler
+  // Click outside to close dropdown
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -430,46 +372,30 @@ export default function PortfolioPage() {
         setIsDropdownOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isDropdownOpen]);
 
-  // Handle escape key to close menu
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isDropdownOpen) {
-        setIsDropdownOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isDropdownOpen]);
-
   const scrollToSection = (id: string) => {
     setIsDropdownOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 90;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
+    const elem = document.getElementById(id);
+    if (elem) {
+      const navOffset = 85;
+      const elementPosition = elem.getBoundingClientRect().top + window.pageYOffset;
       window.scrollTo({
-        top: offsetPosition,
+        top: elementPosition - navOffset,
         behavior: 'smooth',
       });
     }
   };
 
-  const copyEmailToClipboard = () => {
+  const copyEmail = () => {
     navigator.clipboard.writeText('hariprasad@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 3000);
   };
 
-  const handleFormSubmit = (e: FormEvent) => {
+  const submitForm = (e: FormEvent) => {
     e.preventDefault();
     setFormSent(true);
     setTimeout(() => {
@@ -480,121 +406,102 @@ export default function PortfolioPage() {
 
   return (
     <>
-      {/* Background Ambience and Particles */}
-      <AmbientCanvas />
+      {/* Background Ambience and Silky Light Waves */}
+      <SilkyRibbonCanvas />
 
       {/* =========================================================================
-          TOP NAVBAR
+          TOP NAVBAR (PIXEL-MATCHING REFERENCE IMAGE)
       ========================================================================= */}
-      <header className={`navbar-wrapper ${isScrolled ? 'navbar-scrolled' : ''}`}>
-        <div className="navbar-container">
-          {/* Animated Laser Border at Bottom */}
-          <div className="navbar-laser-border" />
+      <header className={`navbar-fixed-outer ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="navbar-pill">
+          {/* Subtle edge glowing flares and star sparkle from image */}
+          <span className="navbar-corner-glow top-left" />
+          <span className="navbar-corner-glow bottom-right" />
+          <span className="navbar-star-sparkle">✦</span>
 
-          {/* Left: Brand / Hariprasad P */}
+          {/* Left: Brand "Hariprasad P" with Serif Typography */}
           <a
             href="#home"
-            className="nav-brand"
+            className="nav-brand-link"
             onClick={(e) => {
               e.preventDefault();
               scrollToSection('home');
             }}
           >
-            <div className="brand-icon-wrapper">
-              <div className="brand-orb" />
-              <div className="brand-letters">
-                H<span>P</span>
-              </div>
-            </div>
-            <div className="brand-info">
-              <span className="brand-name">
-                Hariprasad P
-                <span className="brand-dot" />
-              </span>
-              <span className="brand-role">FULL STACK // ARCHITECT</span>
-            </div>
+            <span className="brand-text-serif">Hariprasad</span>
+            <span className="brand-p-accent">P</span>
           </a>
 
-          {/* Right: Actions */}
-          <div className="nav-actions">
-            {/* 1. GitHub Button */}
+          {/* Right Controls: Squircle Icons, Resume Pill, Circular Down Arrow */}
+          <div className="nav-controls-group">
+            {/* GitHub squircle */}
             <a
               href="https://github.com/hariprasad8760-debug"
               target="_blank"
               rel="noopener noreferrer"
-              className="nav-btn nav-social-btn"
-              aria-label="Visit Hariprasad's GitHub profile"
+              className="icon-squircle-btn"
+              aria-label="GitHub Profile"
             >
-              <Github size={16} />
-              <span>GitHub</span>
+              <Github size={20} />
             </a>
 
-            {/* 2. LinkedIn Button */}
+            {/* LinkedIn squircle */}
             <a
               href="https://www.linkedin.com/in/hariprasad-p-622417292"
               target="_blank"
               rel="noopener noreferrer"
-              className="nav-btn nav-social-btn"
-              aria-label="Visit Hariprasad's LinkedIn profile"
+              className="icon-squircle-btn"
+              aria-label="LinkedIn Profile"
             >
-              <Linkedin size={16} />
-              <span>LinkedIn</span>
+              <Linkedin size={20} />
             </a>
 
-            {/* 3. Download Resume Button with Animated Shine */}
+            {/* Resume button with download icon & animated shine */}
             <a
               href="/Hariprasad_P_Resume.txt"
               download="Hariprasad_P_Resume.txt"
-              className="nav-btn nav-resume-btn"
-              aria-label="Download Hariprasad's Resume"
+              className="nav-resume-pill"
+              aria-label="Download Resume"
             >
-              <span className="shine-effect" />
+              <span className="resume-sweep-shine" />
+              <span>Resume</span>
               <ArrowDownToLine size={16} />
-              <span>Download Resume</span>
             </a>
 
-            {/* 4. Circular Down-Arrow Button */}
+            {/* Circular Down Arrow Toggle Button */}
             <button
               ref={toggleBtnRef}
-              className={`nav-dropdown-toggle ${isDropdownOpen ? 'active' : ''}`}
+              className={`circular-down-btn ${isDropdownOpen ? 'active' : ''}`}
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              aria-label="Toggle navigation menu"
+              aria-label="Toggle Navigation Dropdown"
               aria-expanded={isDropdownOpen}
             >
-              <ChevronDown size={20} className={`arrow-icon ${isDropdownOpen ? 'rotate' : ''}`} />
+              <ChevronDown size={22} />
             </button>
           </div>
 
           {/* =========================================================================
-              DROPDOWN / MEGA MENU
+              DROPDOWN MENU (MATCHING EXACT NOTCH & ORDER IN IMAGE)
           ========================================================================= */}
           <AnimatePresence>
             {isDropdownOpen && (
               <motion.div
                 ref={dropdownRef}
-                className="nav-dropdown-menu"
-                initial={{ opacity: 0, y: -12, scale: 0.96 }}
+                className="dropdown-card-panel"
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.96 }}
-                transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
-                <div className="dropdown-header-tag">
-                  <span>Navigation Directory</span>
-                  <small>7 Sections</small>
-                </div>
-
-                <div className="dropdown-items-list">
-                  {NAV_ITEMS.map((item) => (
+                <div className="dropdown-nav-list">
+                  {MENU_ITEMS.map((item, index) => (
                     <button
                       key={item.id}
-                      className="dropdown-item"
+                      className={`dropdown-nav-row ${index === 0 ? 'highlight-active' : ''}`}
                       onClick={() => scrollToSection(item.id)}
                     >
-                      <div className="dropdown-item-icon">{item.icon}</div>
-                      <div className="dropdown-item-content">
-                        <span className="dropdown-item-title">{item.name}</span>
-                        <span className="dropdown-item-desc">{item.desc}</span>
-                      </div>
+                      {item.icon}
+                      <span>{item.name}</span>
                     </button>
                   ))}
                 </div>
@@ -604,112 +511,95 @@ export default function PortfolioPage() {
         </div>
       </header>
 
-      {/* Dim overlay when dropdown is open */}
+      {/* Dim backdrop when menu is open */}
       {isDropdownOpen && (
-        <div className="dropdown-overlay" onClick={() => setIsDropdownOpen(false)} />
+        <div className="menu-backdrop-dim" onClick={() => setIsDropdownOpen(false)} />
       )}
 
       {/* =========================================================================
-          MAIN BODY CONTENT
+          HERO SECTION (MATCHING USER'S IMAGE COPY & DESIGN)
       ========================================================================= */}
       <main>
-        {/* =========================================================================
-            1. HERO SECTION
-        ========================================================================= */}
-        <section id="home" className="hero-wrapper section">
-          <div className="content-container">
-            <div className="hero-grid">
-              {/* Left Column: Hero Text */}
+        <section id="home" className="hero-stage">
+          <div className="hero-main-container">
+            <div className="hero-content-split">
+              {/* Left: Headline & Statement */}
               <div>
+                <h1 className="hero-editorial-heading">
+                  <motion.span
+                    className="hero-word"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    Build.
+                  </motion.span>
+                  <motion.span
+                    className="hero-word"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                  >
+                    Break.
+                  </motion.span>
+                  <motion.span
+                    className="hero-word elevate"
+                    initial={{ opacity: 0, y: 25 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    Better.
+                  </motion.span>
+                </h1>
+
+                {/* Sparkling Red Divider Beam from Image */}
                 <motion.div
-                  className="hero-eyebrow-box"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
+                  className="hero-divider-beam"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ scaleX: 1, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.45 }}
                 >
-                  <span className="status-beacon" />
-                  <span>AVAILABLE FOR FULL-TIME &amp; STRATEGIC ROLES</span>
+                  <span className="divider-sparkle-star">✦</span>
                 </motion.div>
 
-                <motion.h1
-                  className="hero-title"
+                {/* Supporting Developer Statement */}
+                <motion.div
+                  className="hero-four-lines"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 }}
+                  transition={{ duration: 0.6, delay: 0.55 }}
                 >
-                  HARIPRASAD <span className="gradient-wine">P</span>
-                </motion.h1>
-
-                <motion.div
-                  className="hero-motto"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <span>BUILD. INNOVATE. ELEVATE.</span>
-                  <span className="hero-motto-line" />
+                  <p className="hero-line">Where ideas become intelligent digital experiences.</p>
+                  <p className="hero-line">Where clean code meets creative engineering.</p>
+                  <p className="hero-line line-accent">
+                    Building scalable solutions with purpose, precision, and{' '}
+                    <span className="wine-highlight">impact</span>.
+                  </p>
                 </motion.div>
 
-                <motion.p
-                  className="hero-summary"
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  Crafting digital experiences where intelligent ideas meet elegant engineering.
-                  Specializing in scalable full-stack architectures, high-precision interfaces,
-                  and AI-powered digital products.
-                </motion.p>
-
+                {/* CTAs */}
                 <motion.div
-                  className="hero-ctas"
-                  initial={{ opacity: 0, y: 15 }}
+                  className="hero-button-row"
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
+                  transition={{ duration: 0.6, delay: 0.65 }}
                 >
-                  <button onClick={() => scrollToSection('projects')} className="btn-primary">
-                    <span>Explore Selected Work</span>
-                    <ArrowUpRight size={18} />
+                  <button onClick={() => scrollToSection('projects')} className="btn-wine-primary">
+                    <span>Explore Projects</span>
+                    <ArrowUpRight size={17} />
                   </button>
-
-                  <button onClick={() => scrollToSection('contact')} className="btn-secondary">
-                    <span>Initiate Contact</span>
+                  <button onClick={() => scrollToSection('contact')} className="btn-glass-secondary">
+                    <span>Let’s Connect</span>
                     <Mail size={16} />
                   </button>
                 </motion.div>
-
-                <motion.div
-                  className="hero-stats-row"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.5 }}
-                >
-                  <div className="hero-stat-item">
-                    <span className="hero-stat-num">
-                      02<span>+</span>
-                    </span>
-                    <span className="hero-stat-label">Internship Practicums</span>
-                  </div>
-                  <div className="hero-stat-item">
-                    <span className="hero-stat-num">
-                      10<span>+</span>
-                    </span>
-                    <span className="hero-stat-label">Core Technologies</span>
-                  </div>
-                  <div className="hero-stat-item">
-                    <span className="hero-stat-num">
-                      7.5<span>★</span>
-                    </span>
-                    <span className="hero-stat-label">B.Tech IT CGPA</span>
-                  </div>
-                </motion.div>
               </div>
 
-              {/* Right Column: Interactive Tilt Card */}
+              {/* Right: Interactive 3D Dev Telemetry Card */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+                transition={{ duration: 0.7, delay: 0.35 }}
               >
                 <InteractiveDevBadge />
               </motion.div>
@@ -718,89 +608,93 @@ export default function PortfolioPage() {
         </section>
 
         {/* =========================================================================
-            2. ABOUT ME SECTION
+            ABOUT ME SECTION
         ========================================================================= */}
-        <section id="about" className="section">
-          <div className="content-container">
-            <div className="section-badge">01 — PHILOSOPHY &amp; PROFILE</div>
-            <h2 className="section-title">
+        <section id="about" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">01 — PHILOSOPHY</span>
+            <h2 className="section-head-title">
               About <em>Me</em>
             </h2>
-            <p className="section-subtitle">
-              Bridging robust backend engineering with futuristic user interfaces and AI integrations.
+            <p className="section-head-subtitle">
+              Merging deep technical foundations with human-centered product craftsmanship.
             </p>
 
-            <div className="about-grid" style={{ marginTop: '40px' }}>
-              {/* Main Card */}
-              <div className="glass-card about-main-card">
-                <div>
-                  <p className="about-quote">
-                    <strong>Architecting solutions, not just code.</strong> I focus on building
-                    high-reliability web applications that harmonize performance, clean modularity,
-                    and intuitive user interactions. My engineering practice is driven by a deep
-                    curiosity for how distributed systems operate and how modern AI can empower real-world
-                    end users without unnecessary friction.
-                  </p>
+            <div className="about-grid-layout">
+              <div className="glass-surface">
+                <p className="about-narrative">
+                  <strong>Engineering with intentionality.</strong> I develop robust, performant web
+                  applications that solve real-world problems. With extensive foundations in full-stack
+                  development, cloud services, and AI integrations, my focus is on constructing clean,
+                  maintainable architectures that elevate user experience.
+                </p>
 
-                  <div className="about-philosophy-box">
-                    <div className="about-philosophy-title">CORE DEVELOPMENT VALUES</div>
-                    <p className="about-philosophy-desc">
-                      Scalable clean architecture · Rapid prototyping · Accessible performance ·
-                      Zero-compromise aesthetics
-                    </p>
-                  </div>
+                <div className="about-quote-box">
+                  “The best digital products live at the intersection of bulletproof engineering and
+                  thoughtful design.”
                 </div>
 
-                <div className="about-highlights-grid">
-                  <div className="highlight-box">
-                    <b>B.Tech</b>
-                    <span>Information Tech</span>
+                <div className="about-stat-strip">
+                  <div className="stat-box">
+                    <b>02</b>
+                    <span>Internships</span>
                   </div>
-                  <div className="highlight-box">
-                    <b>AI + Full Stack</b>
-                    <span>Specialization</span>
+                  <div className="stat-box">
+                    <b>10+</b>
+                    <span>Core Technologies</span>
                   </div>
-                  <div className="highlight-box">
-                    <b>100%</b>
-                    <span>Dedication to Craft</span>
+                  <div className="stat-box">
+                    <b>7.5</b>
+                    <span>B.Tech IT CGPA</span>
                   </div>
                 </div>
               </div>
 
-              {/* Side Stack */}
-              <div className="about-side-stack">
-                <div className="glass-card">
-                  <div className="info-card-header">
-                    <div className="info-card-icon">
+              <div className="about-stack-col">
+                <div className="glass-surface education-pill-card">
+                  <div className="edu-title-group">
+                    <div className="edu-icon-badge">
                       <GraduationCap size={22} />
                     </div>
-                    <div className="info-card-title">Academic Foundation</div>
-                  </div>
-                  <div className="education-meta">
-                    <div className="education-college">K.S.R College of Engineering</div>
-                    <div className="education-degree">
-                      Bachelor of Technology · Information Technology
+                    <div>
+                      <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Academic Foundation</h4>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                        K.S.R College of Engineering
+                      </p>
                     </div>
                   </div>
-                  <div className="education-score-row">
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                      Cumulative Grade
-                    </span>
-                    <span className="score-badge">CGPA 7.5 / 10.0</span>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                    Bachelor of Technology in Information Technology
+                  </p>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      background: 'rgba(255,255,255,0.04)',
+                      padding: '8px 14px',
+                      borderRadius: '8px',
+                    }}
+                  >
+                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Score</span>
+                    <span style={{ color: 'var(--wine-light)', fontWeight: 700 }}>CGPA: 7.5 / 10.0</span>
                   </div>
                 </div>
 
-                <div className="glass-card">
-                  <div className="info-card-header">
-                    <div className="info-card-icon">
+                <div className="glass-surface education-pill-card">
+                  <div className="edu-title-group">
+                    <div className="edu-icon-badge">
                       <Terminal size={22} />
                     </div>
-                    <div className="info-card-title">Developer DNA</div>
+                    <div>
+                      <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Engineering Tenet</h4>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                        Precision &amp; Scalability
+                      </p>
+                    </div>
                   </div>
-                  <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: '1.6' }}>
-                    Constantly experimenting with next-generation web technologies, intelligent API
-                    orchestrations, and performance-tuned micro-interactions to craft software that
-                    leaves a lasting impression.
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                    Continuous learning, test-driven methodologies, clean Git workflows, and modular
+                    reusable component systems.
                   </p>
                 </div>
               </div>
@@ -809,25 +703,24 @@ export default function PortfolioPage() {
         </section>
 
         {/* =========================================================================
-            3. SKILLS SECTION
+            SKILLS SECTION
         ========================================================================= */}
-        <section id="skills" className="section">
-          <div className="content-container">
-            <div className="section-badge">02 — TECHNICAL ARSENAL</div>
-            <h2 className="section-title">
-              Skills &amp; <em>Technologies</em>
+        <section id="skills" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">02 — TECHNICAL ARSENAL</span>
+            <h2 className="section-head-title">
+              Skills &amp; <em>Arsenal</em>
             </h2>
-            <p className="section-subtitle">
-              Precision tools and production-grade technologies leveraged to turn complex ideas into
-              impactful digital products.
+            <p className="section-head-subtitle">
+              Production-grade technologies harnessed to deliver scalable systems and refined user
+              interfaces.
             </p>
 
-            {/* Category Selector Tabs */}
-            <div className="skills-category-tabs" style={{ marginTop: '36px' }}>
+            <div className="skills-tab-row">
               {SKILL_CATEGORIES.map((cat, idx) => (
                 <button
                   key={cat.category}
-                  className={`category-tab-btn ${activeTab === idx ? 'active' : ''}`}
+                  className={`tab-pill-btn ${activeTab === idx ? 'active' : ''}`}
                   onClick={() => setActiveTab(idx)}
                 >
                   {cat.category}
@@ -835,19 +728,20 @@ export default function PortfolioPage() {
               ))}
             </div>
 
-            {/* Active Category Skills Grid */}
-            <div className="skills-grid">
+            <div className="skills-card-grid">
               {SKILL_CATEGORIES[activeTab].items.map((skill) => (
-                <div key={skill.name} className="skill-card">
-                  <div className="skill-top-row">
-                    <div className="skill-brand-wrap">
-                      <div className="skill-icon-pill">{skill.icon}</div>
-                      <span className="skill-name">{skill.name}</span>
+                <div key={skill.name} className="skill-widget">
+                  <div className="skill-info-top">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>{skill.icon}</span>
+                      <b style={{ color: '#ffffff' }}>{skill.name}</b>
                     </div>
-                    <span className="skill-pct">{skill.pct}%</span>
+                    <span style={{ color: 'var(--wine-light)', fontFamily: 'var(--font-mono)' }}>
+                      {skill.pct}%
+                    </span>
                   </div>
-                  <div className="skill-bar-track">
-                    <div className="skill-bar-fill" style={{ width: `${skill.pct}%` }} />
+                  <div className="skill-meter-track">
+                    <div className="skill-meter-bar" style={{ width: `${skill.pct}%` }} />
                   </div>
                 </div>
               ))}
@@ -856,67 +750,57 @@ export default function PortfolioPage() {
         </section>
 
         {/* =========================================================================
-            4. PROJECTS SECTION
+            PROJECTS SECTION
         ========================================================================= */}
-        <section id="projects" className="section">
-          <div className="content-container">
-            <div className="section-badge">03 — FEATURED BUILDS</div>
-            <h2 className="section-title">
+        <section id="projects" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">03 — PORTFOLIO BUILDS</span>
+            <h2 className="section-head-title">
               Selected <em>Projects</em>
             </h2>
-            <p className="section-subtitle">
-              A curated selection of robust web engineering, AI architectures, and modern user-centric
-              products.
+            <p className="section-head-subtitle">
+              High-impact solutions exhibiting architectural rigor and refined frontend execution.
             </p>
 
-            <div className="projects-grid" style={{ marginTop: '40px' }}>
+            <div className="projects-deck">
               {PROJECTS.map((proj, idx) => (
-                <div key={proj.title} className="project-card">
+                <div key={proj.title} className="project-tile">
                   <div>
-                    <div className="project-top-meta">
-                      <span className="project-idx">0{idx + 1} // CASE STUDY</span>
-                      <span className="project-tag-pill">{proj.metric}</span>
+                    <div className="project-top-spec">
+                      <span className="project-case-label">CASE STUDY 0{idx + 1}</span>
+                      <span className="project-metric-tag">{proj.metric}</span>
                     </div>
-
-                    <div className="project-header-row">
-                      <div className="project-icon-box">
-                        <Layers3 size={22} />
-                      </div>
-                      <div>
-                        <h3 className="project-title">{proj.title}</h3>
-                        <p style={{ fontSize: '0.78rem', color: 'var(--wine-vivid)', fontWeight: 600 }}>
-                          {proj.category}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="project-desc">{proj.desc}</p>
-
-                    <div className="project-tech-tags">
+                    <h3 className="project-tile-title">{proj.title}</h3>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--wine-light)', marginBottom: '12px' }}>
+                      {proj.category}
+                    </p>
+                    <p className="project-tile-desc">{proj.desc}</p>
+                    <div className="project-tags-deck">
                       {proj.tags.map((t) => (
-                        <span key={t} className="tech-tag">
+                        <span key={t} className="tech-tag-chip">
                           {t}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="project-links-row">
+                  <div className="project-tile-actions">
                     <a
                       href={proj.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-link-btn"
+                      className="project-code-btn"
                     >
-                      <Github size={15} />
+                      <Github size={16} />
                       <span>Source Code</span>
                     </a>
                     <button
                       onClick={() => scrollToSection('contact')}
-                      className="project-link-btn primary-link"
+                      className="btn-wine-primary"
+                      style={{ padding: '6px 14px', fontSize: '0.82rem', marginLeft: 'auto' }}
                     >
-                      <span>Demo Inquiries</span>
-                      <ArrowUpRight size={15} />
+                      <span>Inquire</span>
+                      <ArrowUpRight size={14} />
                     </button>
                   </div>
                 </div>
@@ -926,258 +810,355 @@ export default function PortfolioPage() {
         </section>
 
         {/* =========================================================================
-            5. EXPERIENCE SECTION
+            EXPERIENCE SECTION
         ========================================================================= */}
-        <section id="experience" className="section">
-          <div className="content-container">
-            <div className="section-badge">04 — CAREER TIMELINE</div>
-            <h2 className="section-title">
+        <section id="experience" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">04 — JOURNEY</span>
+            <h2 className="section-head-title">
               Professional <em>Experience</em>
             </h2>
-            <p className="section-subtitle">
-              Demonstrated hands-on experience through focused engineering and UI/UX design internships.
+            <p className="section-head-subtitle">
+              Applied engineering and design work within fast-paced internship environments.
             </p>
 
-            <div className="timeline-container" style={{ marginTop: '50px' }}>
-              <div className="timeline-line" />
+            <div className="timeline-stem-wrapper">
+              <div className="timeline-stem-line" />
 
-              {EXPERIENCES.map((exp) => (
-                <div key={exp.company} className="timeline-card glass-card">
-                  <div className="timeline-dot" />
-                  <div className="timeline-header">
-                    <h3 className="timeline-role-title">
-                      {exp.company} <span>— {exp.role}</span>
-                    </h3>
-                    <span className="timeline-duration-badge">{exp.period}</span>
-                  </div>
-
-                  <div className="timeline-org">
-                    <MapPin size={15} color="var(--wine-vivid)" />
-                    <span>{exp.location}</span>
-                  </div>
-
-                  <p className="timeline-desc">{exp.summary}</p>
-
-                  <ul className="timeline-bullets">
-                    {exp.highlights.map((bullet, i) => (
-                      <li key={i}>{bullet}</li>
-                    ))}
-                  </ul>
-
-                  <div className="project-tech-tags" style={{ marginTop: '18px', marginBottom: 0 }}>
-                    {exp.tech.map((t) => (
-                      <span key={t} className="tech-tag">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+              {/* AZHIZEN */}
+              <div className="timeline-event-card glass-surface">
+                <div className="timeline-stem-node" />
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff' }}>
+                    AZHIZEN <span style={{ color: 'var(--wine-light)' }}>— AI Powered Web Development</span>
+                  </h3>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.74rem',
+                      color: 'var(--wine-light)',
+                      background: 'rgba(230,27,77,0.12)',
+                      padding: '4px 12px',
+                      borderRadius: '999px',
+                      border: '1px solid var(--wine-border)',
+                    }}
+                  >
+                    16 JUN 2025 — 30 JUN 2025
+                  </span>
                 </div>
-              ))}
+                <p style={{ fontSize: '0.94rem', color: 'var(--text-muted)', margin: '14px 0' }}>
+                  Developed intelligent, AI-powered web applications and strengthened full-stack engineering
+                  workflows by integrating AI models directly into modern frontend architectures.
+                </p>
+                <div className="project-tags-deck" style={{ margin: 0 }}>
+                  <span className="tech-tag-chip">AI Integration</span>
+                  <span className="tech-tag-chip">React</span>
+                  <span className="tech-tag-chip">Python</span>
+                  <span className="tech-tag-chip">REST APIs</span>
+                </div>
+              </div>
+
+              {/* STACK QUEUE */}
+              <div className="timeline-event-card glass-surface" style={{ marginTop: '28px' }}>
+                <div className="timeline-stem-node" />
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff' }}>
+                    STACK QUEUE <span style={{ color: 'var(--wine-light)' }}>— UI/UX Design Intern</span>
+                  </h3>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.74rem',
+                      color: 'var(--wine-light)',
+                      background: 'rgba(230,27,77,0.12)',
+                      padding: '4px 12px',
+                      borderRadius: '999px',
+                      border: '1px solid var(--wine-border)',
+                    }}
+                  >
+                    10 JUL 2024 — 24 JUL 2024
+                  </span>
+                </div>
+                <p style={{ fontSize: '0.94rem', color: 'var(--text-muted)', margin: '14px 0' }}>
+                  Honed user-centered thinking, interface ergonomics, design systems, and responsive wireframing
+                  to translate complex user journeys into delightful, intuitive screens.
+                </p>
+                <div className="project-tags-deck" style={{ margin: 0 }}>
+                  <span className="tech-tag-chip">UI/UX Systems</span>
+                  <span className="tech-tag-chip">Figma</span>
+                  <span className="tech-tag-chip">Design Ergonomics</span>
+                  <span className="tech-tag-chip">Prototyping</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            6. CERTIFICATIONS SECTION
+            CERTIFICATIONS SECTION
         ========================================================================= */}
-        <section id="certifications" className="section">
-          <div className="content-container">
-            <div className="section-badge">05 — CREDENTIALS &amp; RECOGNITION</div>
-            <h2 className="section-title">
-              Certifications &amp; <em>Specializations</em>
+        <section id="certifications" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">05 — CREDENTIALS</span>
+            <h2 className="section-head-title">
+              Certifications &amp; <em>Honors</em>
             </h2>
-            <p className="section-subtitle">
-              Verified certifications substantiating rigorous proficiency in software engineering and design.
+            <p className="section-head-subtitle">
+              Industry-recognized validations of engineering acumen and interface design.
             </p>
 
-            <div className="certifications-grid" style={{ marginTop: '40px' }}>
-              {CERTIFICATIONS.map((cert) => (
-                <div key={cert.title} className="cert-card">
-                  <div>
-                    <div className="cert-top-row">
-                      <div className="cert-icon-wrap">
-                        <Award size={22} />
-                      </div>
-                      <span className="cert-verified-pill">
-                        <BadgeCheck size={14} />
-                        VERIFIED · {cert.verifiedDate}
-                      </span>
+            <div className="cert-deck-grid">
+              <div className="cert-capsule">
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <div className="edu-icon-badge">
+                      <Award size={20} />
                     </div>
-
-                    <h3 className="cert-title">{cert.title}</h3>
-                    <p className="cert-issuer">{cert.issuer}</p>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '0.72rem',
+                        color: '#10b981',
+                        background: 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.25)',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                      }}
+                    >
+                      <BadgeCheck size={14} /> VERIFIED
+                    </span>
                   </div>
-
-                  <div>
-                    <div className="cert-skills-covered">
-                      {cert.skills.map((s) => (
-                        <span key={s} className="tech-tag">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                    Full Stack Web Engineering
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    Specialization in Modern React &amp; Scalable Backends
+                  </p>
                 </div>
-              ))}
+              </div>
+
+              <div className="cert-capsule">
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <div className="edu-icon-badge">
+                      <Award size={20} />
+                    </div>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '0.72rem',
+                        color: '#10b981',
+                        background: 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.25)',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                      }}
+                    >
+                      <BadgeCheck size={14} /> VERIFIED
+                    </span>
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                    AI-Driven Web Development
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    Azhizen Practical Architecture &amp; LLM Engineering
+                  </p>
+                </div>
+              </div>
+
+              <div className="cert-capsule">
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <div className="edu-icon-badge">
+                      <Award size={20} />
+                    </div>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '0.72rem',
+                        color: '#10b981',
+                        background: 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.25)',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                      }}
+                    >
+                      <BadgeCheck size={14} /> VERIFIED
+                    </span>
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                    UI/UX Design Systems
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                    Stack Queue Usability &amp; Design Architecture
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            7. CONTACT SECTION
+            CONTACT SECTION
         ========================================================================= */}
-        <section id="contact" className="section">
-          <div className="content-container">
-            <div className="section-badge">06 — REACH OUT</div>
-            <h2 className="section-title">
-              Let’s Build Something <em>Extraordinary.</em>
+        <section id="contact" className="portfolio-section">
+          <div className="content-wrapper">
+            <span className="section-eyebrow">06 — TRANSMISSION</span>
+            <h2 className="section-head-title">
+              Let’s Connect &amp; <em>Elevate.</em>
             </h2>
-            <p className="section-subtitle">
-              Have an opening, an innovative build in mind, or wish to connect? Send a transmission.
+            <p className="section-head-subtitle">
+              Ready to collaborate on visionary builds or discuss opportunities.
             </p>
 
-            <div className="contact-layout" style={{ marginTop: '40px' }}>
-              {/* Direct Info */}
-              <div className="contact-info-col">
-                <p className="contact-highlight-text">
-                  I am currently available for full-time engineering roles, AI product development,
-                  and collaborative technology ventures. Reach me directly through any channel below.
+            <div className="contact-grid-deck">
+              <div>
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-platinum)' }}>
+                  Currently open to full-time roles, software engineering contracts, and impactful
+                  technical projects.
                 </p>
 
-                <div className="contact-methods-stack">
+                <div className="contact-channels-list">
                   {/* Email */}
                   <div
-                    onClick={copyEmailToClipboard}
-                    className="contact-method-card"
+                    onClick={copyEmail}
+                    className="contact-link-tile"
                     style={{ cursor: 'pointer' }}
                     title="Click to copy email"
                   >
-                    <div className="contact-method-icon">
-                      <Mail size={20} />
+                    <div className="contact-tile-icon">
+                      <Mail size={18} />
                     </div>
-                    <div className="contact-method-info" style={{ flex: 1 }}>
-                      <small>Direct Email</small>
-                      <span>hariprasad@gmail.com</span>
+                    <div style={{ flex: 1 }}>
+                      <small style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>
+                        Email
+                      </small>
+                      <div style={{ fontWeight: 600 }}>hariprasad@gmail.com</div>
                     </div>
-                    <button
-                      type="button"
-                      style={{
-                        background: 'transparent',
-                        border: 'none',
-                        color: copiedEmail ? '#10b981' : 'var(--text-muted)',
-                        cursor: 'pointer',
-                      }}
-                      aria-label="Copy email"
-                    >
-                      {copiedEmail ? <Check size={18} /> : <Copy size={18} />}
-                    </button>
+                    {copiedEmail ? <Check size={18} color="#10b981" /> : <Copy size={18} color="var(--text-muted)" />}
                   </div>
 
                   {/* Phone */}
-                  <a href="tel:+918807650205" className="contact-method-card">
-                    <div className="contact-method-icon">
-                      <Phone size={20} />
+                  <a href="tel:+918807650205" className="contact-link-tile">
+                    <div className="contact-tile-icon">
+                      <Phone size={18} />
                     </div>
-                    <div className="contact-method-info">
-                      <small>Direct Contact Number</small>
-                      <span>+91 8807650205</span>
+                    <div>
+                      <small style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>
+                        Phone
+                      </small>
+                      <div style={{ fontWeight: 600 }}>+91 8807650205</div>
                     </div>
                   </a>
 
-                  {/* GitHub Direct */}
+                  {/* GitHub */}
                   <a
                     href="https://github.com/hariprasad8760-debug"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="contact-method-card"
+                    className="contact-link-tile"
                   >
-                    <div className="contact-method-icon">
-                      <Github size={20} />
+                    <div className="contact-tile-icon">
+                      <Github size={18} />
                     </div>
-                    <div className="contact-method-info">
-                      <small>Code Repository</small>
-                      <span>github.com/hariprasad8760-debug</span>
+                    <div>
+                      <small style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>
+                        GitHub
+                      </small>
+                      <div style={{ fontWeight: 600 }}>github.com/hariprasad8760-debug</div>
                     </div>
                   </a>
 
-                  {/* LinkedIn Direct */}
+                  {/* LinkedIn */}
                   <a
                     href="https://www.linkedin.com/in/hariprasad-p-622417292"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="contact-method-card"
+                    className="contact-link-tile"
                   >
-                    <div className="contact-method-icon">
-                      <Linkedin size={20} />
+                    <div className="contact-tile-icon">
+                      <Linkedin size={18} />
                     </div>
-                    <div className="contact-method-info">
-                      <small>Professional Network</small>
-                      <span>linkedin.com/in/hariprasad-p</span>
+                    <div>
+                      <small style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>
+                        LinkedIn
+                      </small>
+                      <div style={{ fontWeight: 600 }}>linkedin.com/in/hariprasad-p</div>
                     </div>
                   </a>
                 </div>
               </div>
 
-              {/* Interactive Contact Form */}
-              <div className="contact-form-card">
-                <form onSubmit={handleFormSubmit}>
-                  <div className="form-group">
-                    <label className="form-label">Full Name</label>
+              {/* Form */}
+              <div className="contact-form-glass">
+                <form onSubmit={submitForm}>
+                  <div className="form-field-unit">
+                    <label>Name</label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Alex Mercer"
-                      className="form-input"
+                      placeholder="Your name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Email Address</label>
+                  <div className="form-field-unit">
+                    <label>Email Address</label>
                     <input
                       type="email"
                       required
-                      placeholder="alex@organization.com"
-                      className="form-input"
+                      placeholder="name@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Subject / Purpose</label>
+                  <div className="form-field-unit">
+                    <label>Subject</label>
                     <input
                       type="text"
                       required
-                      placeholder="Project discussion / Role opportunity"
-                      className="form-input"
+                      placeholder="Role Opportunity / Project"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     />
                   </div>
-
-                  <div className="form-group">
-                    <label className="form-label">Message Details</label>
+                  <div className="form-field-unit">
+                    <label>Message</label>
                     <textarea
                       required
                       rows={4}
-                      placeholder="Share project goals, timeline, or inquiries..."
-                      className="form-textarea"
+                      placeholder="Tell me about your idea or project..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
                   </div>
-
-                  <button type="submit" className="form-submit-btn">
-                    <span>Transmitting Message</span>
-                    <Send size={18} />
+                  <button type="submit" className="form-send-btn">
+                    <span>Send Message</span>
+                    <Send size={16} />
                   </button>
-
                   {formSent && (
-                    <div className="form-success-banner">
-                      <BadgeCheck size={20} />
-                      <span>Thank you, message transmitted! Hariprasad will respond promptly.</span>
+                    <div
+                      style={{
+                        marginTop: '16px',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        background: 'rgba(16,185,129,0.12)',
+                        border: '1px solid rgba(16,185,129,0.3)',
+                        color: '#34d399',
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                    >
+                      <BadgeCheck size={18} />
+                      <span>Thank you! Message transmitted successfully.</span>
                     </div>
                   )}
                 </form>
@@ -1190,31 +1171,31 @@ export default function PortfolioPage() {
       {/* =========================================================================
           FOOTER
       ========================================================================= */}
-      <footer className="footer-wrapper">
-        <div className="content-container">
-          <div className="footer-content">
-            <div className="footer-left">
-              <div className="footer-signature">Hariprasad P</div>
-              <p className="footer-copy">
-                Crafted with Black + Wine Red + White aesthetics · High-performance engineering · ©{' '}
-                {new Date().getFullYear()}
+      <footer className="footer-base">
+        <div className="content-wrapper">
+          <div className="footer-flex">
+            <div>
+              <div className="footer-brand-title">
+                Hariprasad <span>P</span>
+              </div>
+              <p className="footer-credits">
+                Designed with precision in Black + Wine Red + White · © {new Date().getFullYear()}
               </p>
             </div>
-
-            <div className="footer-system-status">
-              <span className="status-beacon" />
-              <span>ALL SYSTEMS OPERATIONAL // 60 FPS</span>
+            <div className="footer-status-pill">
+              <span className="status-beacon-live" style={{ margin: 0 }} />
+              <span>SYSTEMS ONLINE // 60 FPS</span>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Back to Top Smooth Button */}
+      {/* Floating Back to Top Button */}
       {isScrolled && (
         <button
-          className="back-to-top-btn"
+          className="floating-top-fab"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Scroll back to top"
+          aria-label="Back to top"
         >
           <ArrowUp size={20} />
         </button>
