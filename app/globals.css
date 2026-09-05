@@ -546,6 +546,30 @@ body {
   font-style: normal;
 }
 
+/* White star sparkle row — below Better. */
+.hero-star-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: 2px;
+}
+
+.hero-star {
+  font-size: 0.95rem;
+  color: #ffffff;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.9)) drop-shadow(0 0 12px rgba(230,27,77,0.5));
+  animation: starTwinkle 2.2s infinite ease-in-out both;
+}
+
+@keyframes starTwinkle {
+  0%   { opacity: 0;    transform: scale(0.5) rotate(0deg); }
+  30%  { opacity: 1;    transform: scale(1.2) rotate(20deg); }
+  60%  { opacity: 0.6;  transform: scale(0.9) rotate(-10deg); }
+  100% { opacity: 0;    transform: scale(0.5) rotate(30deg); }
+}
+
 /* Glowing Star Divider Beam (Matching Image) */
 .hero-divider-beam {
   position: relative;
@@ -751,12 +775,67 @@ body {
   justify-content: center;
 }
 
+/* Premium dual-ring orbit with glowing traveler dot */
 .stage-rotating-orbit {
   position: absolute;
-  inset: 0;
+  inset: -6px;
   border-radius: 50%;
-  border: 1.5px dashed rgba(230, 27, 77, 0.45);
-  animation: spinOrbit 20s linear infinite;
+  border: 1px solid rgba(230, 27, 77, 0.2);
+  animation: spinOrbit 8s linear infinite;
+}
+
+.stage-rotating-orbit::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Glowing traveler dot on the orbit ring */
+.stage-rotating-orbit::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wine-vivid);
+  box-shadow: 0 0 10px 3px var(--wine-light), 0 0 22px 6px rgba(230,27,77,0.45);
+}
+
+@keyframes spinOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Counter-clockwise orbit — same ring as CW, second red ball going opposite */
+.stage-rotating-orbit-ccw {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: none;
+  animation: spinOrbitCCW 8s linear infinite;
+}
+
+.stage-rotating-orbit-ccw::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--wine-vivid);
+  box-shadow: 0 0 10px 3px var(--wine-light), 0 0 22px 6px rgba(230,27,77,0.45);
+}
+
+@keyframes spinOrbitCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
 .stage-wine-halo {
@@ -788,11 +867,6 @@ body {
 .stage-monogram span {
   color: var(--wine-vivid);
   text-shadow: 0 0 12px var(--wine-light);
-}
-
-@keyframes spinOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .telemetry-meta {

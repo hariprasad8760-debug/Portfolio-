@@ -312,6 +312,7 @@ function InteractiveDevBadge() {
         {/* Multi-layered Avatar Crest */}
         <div className="telemetry-avatar-stage">
           <div className="stage-rotating-orbit" />
+          <div className="stage-rotating-orbit-ccw" />
           <div className="stage-wine-halo" />
           <div className="stage-monogram">
             H<span>P</span>
@@ -323,7 +324,7 @@ function InteractiveDevBadge() {
           <h3 className="telemetry-name">
             Hariprasad <span>P</span>
           </h3>
-          <p className="telemetry-role">Full Stack Developer &amp; AI Architect</p>
+          <p className="telemetry-role">Full Stack Developer</p>
         </div>
 
         {/* Quick Metrics Bar */}
@@ -346,10 +347,10 @@ function InteractiveDevBadge() {
         <div className="telemetry-pills-wrap">
           <span className="telemetry-pill">Java</span>
           <span className="telemetry-pill">Python</span>
-          <span className="telemetry-pill">React</span>
-          <span className="telemetry-pill">Next.js</span>
+          <span className="telemetry-pill">HTML</span>
+          <span className="telemetry-pill">Tailwind CSS</span>
+          <span className="telemetry-pill">JavaScript</span>
           <span className="telemetry-pill">SQL</span>
-          <span className="telemetry-pill">UI/UX</span>
         </div>
 
       </motion.div>
