@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume — Hariprasad P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070409;
+      --card-bg: rgba(22, 9, 24, 0.85);
+      --wine-base: #760c23;
+      --wine-rich: #9c1032;
+      --wine-vivid: #e61b4d;
+      --wine-glow: rgba(230, 27, 77, 0.4);
+      --wine-border: rgba(230, 27, 77, 0.35);
+      --text: #f1f3f8;
+      --text-muted: #9fa5b4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Sora', sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .resume-container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--wine-border);
+      border-radius: 20px;
+      padding: 48px;
+      box-shadow: 0 25px 60px -10px rgba(0,0,0,0.9), 0 0 35px -5px var(--wine-glow);
+    }
+    .header {
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .name span { color: var(--wine-vivid); text-shadow: 0 0 12px var(--wine-vivid); }
+    .role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      color: var(--wine-vivid);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .contacts {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .contacts a { color: var(--text); text-decoration: none; }
+    .contacts a:hover { color: var(--wine-vivid); }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--wine-border), transparent);
+    }
+    .section { margin-bottom: 30px; }
+    .item { margin-bottom: 18px; }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .item-sub {
+      color: var(--wine-vivid);
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+    .item-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #f1f3f8;
+    }
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .action-btn {
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--wine-border);
+      background: linear-gradient(135deg, var(--wine-rich), var(--wine-base));
+      color: #fff;
+      box-shadow: 0 4px 15px var(--wine-glow);
+    }
+    @media (max-width: 600px) {
+      .resume-container { padding: 24px; }
+      .contacts { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <div class="header">
+      <div>
+        <h1 class="name">Hariprasad <span>P</span></h1>
+        <p class="role">Full Stack Developer &amp; AI Architect</p>
+      </div>
+      <div class="contacts">
+        <p>Email: <a href="mailto:hariprasad@gmail.com">hariprasad@gmail.com</a></p>
+        <p>Phone: +91 8807650205</p>
+        <p>GitHub: <a href="https://github.com/hariprasad8760-debug" target="_blank">github.com/hariprasad8760-debug</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/hariprasad-p-622417292" target="_blank">linkedin.com/in/hariprasad-p</a></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Professional Profile</h3>
+      <p class="item-desc">
+        Dynamic, results-driven Full Stack Developer with hands-on expertise building scalable, high-performance web applications. Specialized in modern frontend component systems (React, Next.js, TypeScript), robust backends (Node.js, Express, SQL, Java, Python), and real-world AI model integrations.
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>Education</h3>
+      <div class="item">
+        <div class="item-header">
+          <span>K.S.R College of Engineering</span>
+          <span>CGPA: 7.5 / 10.0</span>
+        </div>
+        <div class="item-sub">Bachelor of Technology — Information Technology (Final Year)</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Experience &amp; Internships</h3>
+      <div class="item">
+        <div class="item-header">
+          <span>AZHIZEN</span>
+          <span>16 JUN 2025 — 30 JUN 2025</span>
+        </div>
+        <div class="item-sub">AI-Powered Web Development Intern</div>
+        <p class="item-desc">
+          Engineered AI-powered web applications and modernized frontend/backend workflows. Integrated AI prompts and dynamic responses with low-latency API handling.
+        </p>
+      </div>
+
+      <div class="item">
+        <div class="item-header">
+          <span>STACK QUEUE</span>
+          <span>10 JUL 2024 — 24 JUL 2024</span>
+        </div>
+        <div class="item-sub">UI/UX Design Intern</div>
+        <p class="item-desc">
+          Designed user-centered web interface components, interactive wireframes, and prototypes, adhering to ergonomic design systems.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Technical Arsenal</h3>
+      <div class="tags">
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">React.js</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">SQL / PostgreSQL</span>
+        <span class="tag">REST APIs</span>
+        <span class="tag">AI / LLM Integration</span>
+        <span class="tag">UI/UX Systems</span>
+        <span class="tag">Git &amp; GitHub</span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a href="/Hariprasad_P_Resume.txt" download="Hariprasad_P_Resume.txt" class="action-btn">Download Resume (TXT)</a>
+      <a href="/" class="action-btn" style="background: rgba(255,255,255,0.08);">Back to Portfolio</a>
+    </div>
+  </div>
+</body>
+</html>

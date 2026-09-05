@@ -14,6 +14,8 @@ import {
   ChevronDown,
   Code2,
   Copy,
+  ExternalLink,
+  FileText,
   FolderGit2,
   Github,
   GraduationCap,
@@ -294,6 +296,10 @@ function InteractiveDevBadge() {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Shimmering Top Laser Flare */}
+        <span className="card-laser-flare" />
+
+        {/* Top Spec Bar */}
         <div className="card-spec-bar">
           <div className="terminal-pip-group">
             <span className="pip wine" />
@@ -303,6 +309,7 @@ function InteractiveDevBadge() {
           <span className="card-spec-tag">FULL STACK // VERIFIED</span>
         </div>
 
+        {/* Multi-layered Avatar Crest */}
         <div className="telemetry-avatar-stage">
           <div className="stage-rotating-orbit" />
           <div className="stage-wine-halo" />
@@ -311,11 +318,31 @@ function InteractiveDevBadge() {
           </div>
         </div>
 
+        {/* Developer Identity */}
         <div className="telemetry-meta">
-          <h3 className="telemetry-name">Hariprasad P</h3>
+          <h3 className="telemetry-name">
+            Hariprasad <span>P</span>
+          </h3>
           <p className="telemetry-role">Full Stack Developer &amp; AI Architect</p>
         </div>
 
+        {/* Quick Metrics Bar */}
+        <div className="card-metrics-strip">
+          <div className="metric-cell">
+            <b>02</b>
+            <span>Internships</span>
+          </div>
+          <div className="metric-cell">
+            <b>10+</b>
+            <span>Core Tech</span>
+          </div>
+          <div className="metric-cell">
+            <b>7.5</b>
+            <span>B.Tech CGPA</span>
+          </div>
+        </div>
+
+        {/* Tech Stack Pills */}
         <div className="telemetry-pills-wrap">
           <span className="telemetry-pill">Java</span>
           <span className="telemetry-pill">Python</span>
@@ -325,14 +352,37 @@ function InteractiveDevBadge() {
           <span className="telemetry-pill">UI/UX</span>
         </div>
 
-        <div className="telemetry-pulse-status">
-          <div>
-            <span className="status-beacon-live" />
-            <span style={{ color: 'var(--text-muted)' }}>Status:</span> Open for Roles
-          </div>
-          <span style={{ color: 'var(--wine-light)', fontWeight: 600 }}>Available</span>
-        </div>
       </motion.div>
+
+      {/* Status Bar Outside Below the Card */}
+      <motion.div
+        className="telemetry-pulse-status outside-bar"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.45 }}
+      >
+        <div>
+          <span className="status-beacon-live" />
+          <span style={{ color: 'var(--text-muted)' }}>Status:</span> Open for Roles
+        </div>
+        <span style={{ color: 'var(--wine-light)', fontWeight: 600 }}>Available</span>
+      </motion.div>
+
+      {/* View Resume Button Outside Below the Status Bar */}
+      <motion.a
+        href="/Hariprasad_P_Resume.txt"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-view-resume-btn"
+        aria-label="View Hariprasad's Resume"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <span className="resume-sweep-shine" />
+        <span>View resume</span>
+        <FileText size={17} />
+      </motion.a>
     </div>
   );
 }
@@ -414,10 +464,9 @@ export default function PortfolioPage() {
       ========================================================================= */}
       <header className={`navbar-fixed-outer ${isScrolled ? 'scrolled' : ''}`}>
         <div className="navbar-pill">
-          {/* Subtle edge glowing flares and star sparkle from image */}
+          {/* Subtle edge glowing flares */}
           <span className="navbar-corner-glow top-left" />
           <span className="navbar-corner-glow bottom-right" />
-          <span className="navbar-star-sparkle">✦</span>
 
           {/* Left: Brand "Hariprasad P" with Serif Typography */}
           <a
@@ -552,15 +601,13 @@ export default function PortfolioPage() {
                   </motion.span>
                 </h1>
 
-                {/* Sparkling Red Divider Beam from Image */}
+                {/* Clean Glowing Wine-Red Divider Beam */}
                 <motion.div
                   className="hero-divider-beam"
                   initial={{ scaleX: 0, opacity: 0 }}
                   animate={{ scaleX: 1, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.45 }}
-                >
-                  <span className="divider-sparkle-star">✦</span>
-                </motion.div>
+                />
 
                 {/* Supporting Developer Statement */}
                 <motion.div
