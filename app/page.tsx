@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
 import {
   ArrowDownToLine,
   ArrowUp,
@@ -389,6 +389,26 @@ function InteractiveDevBadge() {
 }
 
 /* =========================================================================
+   SCROLL REVEAL COMPONENT — appear/disappear on scroll
+========================================================================= */
+function ScrollReveal({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { amount: 0.15, once: false });
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 50 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* =========================================================================
    PORTFOLIO PAGE COMPONENT
 ========================================================================= */
 export default function PortfolioPage() {
@@ -660,91 +680,132 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="about" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">01 — PHILOSOPHY</span>
-            <h2 className="section-head-title">
-              About <em>Me</em>
-            </h2>
-            <p className="section-head-subtitle">
-              Merging deep technical foundations with human-centered product craftsmanship.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">01 — PHILOSOPHY</span>
+              <h2 className="section-head-title">
+                About <em>Me</em>
+              </h2>
+              <p className="section-head-subtitle">
+                Merging deep technical foundations with human-centered product craftsmanship.
+              </p>
+            </ScrollReveal>
 
             <div className="about-grid-layout">
-              <div className="glass-surface">
-                <p className="about-narrative">
-                  <strong>Engineering with intentionality.</strong> I develop robust, performant web
-                  applications that solve real-world problems. With extensive foundations in full-stack
-                  development, cloud services, and AI integrations, my focus is on constructing clean,
-                  maintainable architectures that elevate user experience.
-                </p>
+              <ScrollReveal>
+                <div className="glass-surface">
+                  <p className="about-narrative">
+                    I&apos;m <strong>Hariprasad P</strong> — a developer who enjoys turning ideas into experiences
+                    that feel simple, useful, and different.
+                  </p>
+                  <p className="about-narrative" style={{ marginTop: '14px' }}>
+                    I explore full-stack development, AI, and emerging technologies, constantly experimenting,
+                    learning, and pushing ideas beyond the obvious.
+                  </p>
 
-                <div className="about-quote-box">
-                  “The best digital products live at the intersection of bulletproof engineering and
-                  thoughtful design.”
-                </div>
+                  <div className="about-quote-box">
+                    &ldquo;The best digital products live at the intersection of bulletproof engineering and
+                    thoughtful design.&rdquo;
+                  </div>
 
-                <div className="about-stat-strip">
-                  <div className="stat-box">
-                    <b>02</b>
-                    <span>Internships</span>
-                  </div>
-                  <div className="stat-box">
-                    <b>10+</b>
-                    <span>Core Technologies</span>
-                  </div>
-                  <div className="stat-box">
-                    <b>7.5</b>
-                    <span>B.Tech IT CGPA</span>
+                  <div className="about-stat-strip">
+                    <div className="stat-box">
+                      <b>02</b>
+                      <span>Internships</span>
+                    </div>
+                    <div className="stat-box">
+                      <b>10+</b>
+                      <span>Core Technologies</span>
+                    </div>
+                    <div className="stat-box">
+                      <b>7.5</b>
+                      <span>B.Tech IT CGPA</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
 
               <div className="about-stack-col">
-                <div className="glass-surface education-pill-card">
-                  <div className="edu-title-group">
-                    <div className="edu-icon-badge">
-                      <GraduationCap size={22} />
+                <ScrollReveal>
+                  <div className="glass-surface education-pill-card">
+                    <div className="edu-title-group">
+                      <div className="edu-icon-badge">
+                        <GraduationCap size={22} />
+                      </div>
+                      <div>
+                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Academic Foundation</h4>
+                        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                          K.S.R College of Engineering
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Academic Foundation</h4>
-                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                        K.S.R College of Engineering
-                      </p>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                      Bachelor of Technology in Information Technology
+                    </p>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        background: 'rgba(255,255,255,0.04)',
+                        padding: '8px 14px',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Score</span>
+                      <span style={{ color: 'var(--wine-light)', fontWeight: 700 }}>CGPA: 7.5 / 10.0</span>
                     </div>
                   </div>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
-                    Bachelor of Technology in Information Technology
-                  </p>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      background: 'rgba(255,255,255,0.04)',
-                      padding: '8px 14px',
-                      borderRadius: '8px',
-                    }}
-                  >
-                    <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Score</span>
-                    <span style={{ color: 'var(--wine-light)', fontWeight: 700 }}>CGPA: 7.5 / 10.0</span>
-                  </div>
-                </div>
+                </ScrollReveal>
 
-                <div className="glass-surface education-pill-card">
-                  <div className="edu-title-group">
-                    <div className="edu-icon-badge">
-                      <Terminal size={22} />
+                <ScrollReveal>
+                  <div className="glass-surface education-pill-card">
+                    <div className="edu-title-group">
+                      <div className="edu-icon-badge">
+                        <GraduationCap size={22} />
+                      </div>
+                      <div>
+                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Schooling</h4>
+                        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                          Sri Vidhya Mandir HLC
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Engineering Tenet</h4>
-                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                        Precision &amp; Scalability
-                      </p>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '12px' }}>
+                      Higher Secondary Education
+                    </p>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        background: 'rgba(255,255,255,0.04)',
+                        padding: '8px 14px',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Score</span>
+                      <span style={{ color: 'var(--wine-light)', fontWeight: 700 }}>77%</span>
                     </div>
                   </div>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    Continuous learning, test-driven methodologies, clean Git workflows, and modular
-                    reusable component systems.
-                  </p>
-                </div>
+                </ScrollReveal>
+
+                <ScrollReveal>
+                  <div className="glass-surface education-pill-card">
+                    <div className="edu-title-group">
+                      <div className="edu-icon-badge">
+                        <Terminal size={22} />
+                      </div>
+                      <div>
+                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Engineering Tenet</h4>
+                        <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                          Precision &amp; Scalability
+                        </p>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+                      Continuous learning, test-driven methodologies, clean Git workflows, and modular
+                      reusable component systems.
+                    </p>
+                  </div>
+                </ScrollReveal>
               </div>
             </div>
           </div>
@@ -755,14 +816,16 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="skills" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">02 — TECHNICAL ARSENAL</span>
-            <h2 className="section-head-title">
-              Skills &amp; <em>Arsenal</em>
-            </h2>
-            <p className="section-head-subtitle">
-              Production-grade technologies harnessed to deliver scalable systems and refined user
-              interfaces.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">02 — TECHNICAL ARSENAL</span>
+              <h2 className="section-head-title">
+                Skills &amp; <em>Arsenal</em>
+              </h2>
+              <p className="section-head-subtitle">
+                Production-grade technologies harnessed to deliver scalable systems and refined user
+                interfaces.
+              </p>
+            </ScrollReveal>
 
             <div className="skills-tab-row">
               {SKILL_CATEGORIES.map((cat, idx) => (
@@ -802,13 +865,15 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="projects" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">03 — PORTFOLIO BUILDS</span>
-            <h2 className="section-head-title">
-              Selected <em>Projects</em>
-            </h2>
-            <p className="section-head-subtitle">
-              High-impact solutions exhibiting architectural rigor and refined frontend execution.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">03 — PORTFOLIO BUILDS</span>
+              <h2 className="section-head-title">
+                Selected <em>Projects</em>
+              </h2>
+              <p className="section-head-subtitle">
+                High-impact solutions exhibiting architectural rigor and refined frontend execution.
+              </p>
+            </ScrollReveal>
 
             <div className="projects-deck">
               {PROJECTS.map((proj, idx) => (
@@ -862,13 +927,15 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="experience" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">04 — JOURNEY</span>
-            <h2 className="section-head-title">
-              Professional <em>Experience</em>
-            </h2>
-            <p className="section-head-subtitle">
-              Applied engineering and design work within fast-paced internship environments.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">04 — JOURNEY</span>
+              <h2 className="section-head-title">
+                Professional <em>Experience</em>
+              </h2>
+              <p className="section-head-subtitle">
+                Applied engineering and design work within fast-paced internship environments.
+              </p>
+            </ScrollReveal>
 
             <div className="timeline-stem-wrapper">
               <div className="timeline-stem-line" />
@@ -947,13 +1014,15 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="certifications" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">05 — CREDENTIALS</span>
-            <h2 className="section-head-title">
-              Certifications &amp; <em>Honors</em>
-            </h2>
-            <p className="section-head-subtitle">
-              Industry-recognized validations of engineering acumen and interface design.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">05 — CREDENTIALS</span>
+              <h2 className="section-head-title">
+                Certifications &amp; <em>Honors</em>
+              </h2>
+              <p className="section-head-subtitle">
+                Industry-recognized validations of engineering acumen and interface design.
+              </p>
+            </ScrollReveal>
 
             <div className="cert-deck-grid">
               <div className="cert-capsule">
@@ -1057,13 +1126,15 @@ export default function PortfolioPage() {
         ========================================================================= */}
         <section id="contact" className="portfolio-section">
           <div className="content-wrapper">
-            <span className="section-eyebrow">06 — TRANSMISSION</span>
-            <h2 className="section-head-title">
-              Let’s Connect &amp; <em>Elevate.</em>
-            </h2>
-            <p className="section-head-subtitle">
-              Ready to collaborate on visionary builds or discuss opportunities.
-            </p>
+            <ScrollReveal>
+              <span className="section-eyebrow">06 — TRANSMISSION</span>
+              <h2 className="section-head-title">
+                Let&apos;s Connect &amp; <em>Elevate.</em>
+              </h2>
+              <p className="section-head-subtitle">
+                Ready to collaborate on visionary builds or discuss opportunities.
+              </p>
+            </ScrollReveal>
 
             <div className="contact-grid-deck">
               <div>
