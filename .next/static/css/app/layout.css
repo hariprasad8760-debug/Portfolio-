@@ -1709,3 +1709,15 @@ body {
   }
 }
 
+/* Hide Next.js dev indicator / badge (bottom-left N symbol) */
+[data-nextjs-dev-indicator],
+[data-next-badge],
+nextjs-portal,
+#nextjs-dev-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+

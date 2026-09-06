@@ -685,9 +685,6 @@ export default function PortfolioPage() {
               <h2 className="section-head-title">
                 About <em>Me</em>
               </h2>
-              <p className="section-head-subtitle">
-                Merging deep technical foundations with human-centered product craftsmanship.
-              </p>
             </ScrollReveal>
 
             <div className="about-grid-layout">
@@ -702,24 +699,8 @@ export default function PortfolioPage() {
                     learning, and pushing ideas beyond the obvious.
                   </p>
 
-                  <div className="about-quote-box">
-                    &ldquo;The best digital products live at the intersection of bulletproof engineering and
-                    thoughtful design.&rdquo;
-                  </div>
-
-                  <div className="about-stat-strip">
-                    <div className="stat-box">
-                      <b>02</b>
-                      <span>Internships</span>
-                    </div>
-                    <div className="stat-box">
-                      <b>10+</b>
-                      <span>Core Technologies</span>
-                    </div>
-                    <div className="stat-box">
-                      <b>7.5</b>
-                      <span>B.Tech IT CGPA</span>
-                    </div>
+                  <div className="about-quote-box" style={{ fontSize: '0.98rem', lineHeight: '1.75', marginBottom: 0 }}>
+                    &ldquo;I&apos;m looking for an opportunity to start my professional journey where I can give my full effort, take responsibility, and continuously learn from real-world challenges. I&apos;m eager to gain practical experience, improve my skills, and contribute meaningful value to the team while growing alongside the organization.&rdquo;
                   </div>
                 </div>
               </ScrollReveal>
@@ -763,9 +744,9 @@ export default function PortfolioPage() {
                         <GraduationCap size={22} />
                       </div>
                       <div>
-                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Schooling</h4>
+                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>School</h4>
                         <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                          Sri Vidhya Mandir HLC
+                          Sri Vidhya Mandir
                         </p>
                       </div>
                     </div>
@@ -794,15 +775,14 @@ export default function PortfolioPage() {
                         <Terminal size={22} />
                       </div>
                       <div>
-                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Engineering Tenet</h4>
+                        <h4 style={{ color: '#ffffff', fontSize: '1.1rem' }}>Growth Philosophy</h4>
                         <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-                          Precision &amp; Scalability
+                          Learn. Adapt. Contribute.
                         </p>
                       </div>
                     </div>
                     <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                      Continuous learning, test-driven methodologies, clean Git workflows, and modular
-                      reusable component systems.
+                      I&apos;m eager to begin my professional journey, take on real-world challenges, learn from experienced teams, and continuously improve while making a meaningful contribution to every project I work on.
                     </p>
                   </div>
                 </ScrollReveal>
