@@ -699,8 +699,11 @@ export default function PortfolioPage() {
                     learning, and pushing ideas beyond the obvious.
                   </p>
 
-                  <div className="about-quote-box" style={{ fontSize: '0.98rem', lineHeight: '1.75', marginBottom: 0 }}>
-                    &ldquo;I&apos;m looking for an opportunity to start my professional journey where I can give my full effort, take responsibility, and continuously learn from real-world challenges. I&apos;m eager to gain practical experience, improve my skills, and contribute meaningful value to the team while growing alongside the organization.&rdquo;
+                  <div className="about-quote-box">
+                    <span className="about-quote-shine" />
+                    <div className="about-quote-text">
+                      &ldquo;I&apos;m looking for an opportunity to start my professional journey where I can give my full effort, take responsibility, and continuously learn from real-world challenges. I&apos;m eager to gain practical experience, improve my skills, and contribute meaningful value to the team while growing alongside the organization.&rdquo;
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>

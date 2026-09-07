@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Hariprasad P | Futuristic Full Stack & AI Developer',
+  title: 'Hariprasad P | Portfolio',
   description:
     'Luxury, high-performance developer portfolio of Hariprasad P. Specializing in scalable full-stack architectures, responsive design systems, and AI-powered web solutions.',
   keywords: [
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Hariprasad P', url: 'https://github.com/hariprasad8760-debug' }],
   openGraph: {
-    title: 'Hariprasad P | Futuristic Full Stack & AI Developer',
+    title: 'Hariprasad P | Portfolio',
     description: 'Build. Break. Better. Where ideas become intelligent digital experiences.',
     type: 'website',
   },

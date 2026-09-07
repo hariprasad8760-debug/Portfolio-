@@ -1112,14 +1112,60 @@ body {
 }
 
 .about-quote-box {
-  background: rgba(230, 27, 77, 0.08);
-  border-left: 3px solid var(--wine-vivid);
-  padding: 16px 20px;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  margin-bottom: 28px;
-  font-size: 0.92rem;
-  color: var(--text-muted);
+  position: relative;
+  background: linear-gradient(135deg, rgba(230, 27, 77, 0.12) 0%, rgba(35, 8, 16, 0.4) 100%);
+  border-left: 3px solid var(--wine-light);
+  border-top: 1px solid rgba(230, 27, 77, 0.25);
+  border-right: 1px solid rgba(230, 27, 77, 0.18);
+  border-bottom: 1px solid rgba(230, 27, 77, 0.25);
+  padding: 20px 24px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin-bottom: 0;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--text-platinum);
+  overflow: hidden;
+  box-shadow: 0 4px 20px -2px rgba(230, 27, 77, 0.15), inset 0 0 15px rgba(230, 27, 77, 0.08);
+  transition: all var(--transition-smooth);
 }
+
+.about-quote-box:hover {
+  border-left-color: var(--wine-vivid);
+  box-shadow: 0 8px 30px -2px rgba(230, 27, 77, 0.3), inset 0 0 20px rgba(230, 27, 77, 0.15);
+}
+
+.about-quote-box .about-quote-text {
+  position: relative;
+  z-index: 2;
+}
+
+/* Diagonal shine sweep across quote box matching resume button */
+.about-quote-shine {
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 35%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(230, 27, 77, 0.5) 70%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  animation: quoteSweepGlow 4s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes quoteSweepGlow {
+  0% { left: -80%; opacity: 0; }
+  15% { opacity: 0.95; }
+  38% { left: 150%; opacity: 0; }
+  100% { left: 150%; opacity: 0; }
+}
+
 
 .about-stat-strip {
   display: grid;
