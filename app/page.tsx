@@ -12,6 +12,8 @@ import {
   Briefcase,
   Check,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   Copy,
   ExternalLink,
@@ -62,20 +64,19 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     category: 'Core Languages',
     items: [
       { name: 'Java', pct: 85, icon: '☕' },
-      { name: 'Python', pct: 82, icon: '🐍' },
-      { name: 'JavaScript', pct: 88, icon: 'JS' },
-      { name: 'TypeScript', pct: 80, icon: 'TS' },
-      { name: 'SQL', pct: 84, icon: '▦' },
+      { name: 'Python', pct: 80, icon: '🐍' },
+      { name: 'SQL', pct: 80, icon: '▦' },
     ],
   },
   {
     category: 'Frontend & UI Systems',
     items: [
-      { name: 'React.js', pct: 90, icon: '⚛' },
-      { name: 'Next.js', pct: 86, icon: '▲' },
-      { name: 'HTML5 & CSS3', pct: 92, icon: '✦' },
-      { name: 'UI / UX Design', pct: 85, icon: '◈' },
-      { name: 'Framer Motion', pct: 84, icon: '≋' },
+      { name: 'HTML', pct: 85, icon: '✦' },
+      { name: 'CSS', pct: 85, icon: '◈' },
+      { name: 'Tailwind CSS', pct: 80, icon: '≋' },
+      { name: 'Bootstrap', pct: 80, icon: '🅱' },
+      { name: 'JavaScript', pct: 80, icon: 'JS' },
+      { name: 'React.js', pct: 55, icon: '⚛' },
     ],
   },
   {
@@ -839,6 +840,42 @@ export default function PortfolioPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Skills Navigation Controls (< >) */}
+            <div className="skills-nav-row">
+              <button
+                className="skills-nav-arrow-btn"
+                onClick={() =>
+                  setActiveTab((prev) => (prev === 0 ? SKILL_CATEGORIES.length - 1 : prev - 1))
+                }
+                aria-label="Previous skill category"
+                title="Previous Category"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              <div className="skills-nav-indicator">
+                {SKILL_CATEGORIES.map((cat, idx) => (
+                  <span
+                    key={cat.category}
+                    className={`skills-nav-dot ${activeTab === idx ? 'active' : ''}`}
+                    onClick={() => setActiveTab(idx)}
+                    title={cat.category}
+                  />
+                ))}
+              </div>
+
+              <button
+                className="skills-nav-arrow-btn"
+                onClick={() =>
+                  setActiveTab((prev) => (prev === SKILL_CATEGORIES.length - 1 ? 0 : prev + 1))
+                }
+                aria-label="Next skill category"
+                title="Next Category"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
           </div>
         </section>
