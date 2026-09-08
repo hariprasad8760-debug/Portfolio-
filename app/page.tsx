@@ -56,37 +56,67 @@ const MENU_ITEMS: MenuItem[] = [
 
 interface SkillCategory {
   category: string;
-  items: { name: string; pct: number; icon: string }[];
+  items: { name: string; pct: number; icon: React.ReactNode }[];
 }
 
 const SKILL_CATEGORIES: SkillCategory[] = [
   {
     category: 'Core Languages',
     items: [
-      { name: 'Java', pct: 85, icon: '☕' },
-      { name: 'Python', pct: 80, icon: '🐍' },
-      { name: 'SQL', pct: 80, icon: '▦' },
+      {
+        name: 'Java',
+        pct: 85,
+        icon: (
+          <span className="skill-tech-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M8.85 16.83c0 .13.1.23.23.23h.05c1.48-.07 2.94-.37 4.31-.88.35-.13.52-.52.39-.87-.13-.35-.52-.52-.87-.39-1.18.44-2.43.7-3.7.76-.23.01-.41.16-.41.35v.8zm-1.07-2.61c.14.07.31.02.38-.12.59-1.25 1.57-2.28 2.79-2.95.33-.18.45-.6.27-.93-.18-.33-.6-.45-.93-.27-1.47.8-2.65 2.04-3.36 3.54-.08.16-.01.36.15.44l.7.29zm8.56 1.84c-1.85 1.05-4.04 1.55-6.21 1.44-.37-.02-.69.26-.71.63-.02.37.26.69.63.71 2.52.13 5.06-.46 7.21-1.68.32-.18.44-.59.26-.91-.18-.32-.59-.44-.91-.26l-.27.07zm-2.09-7.79c-.38.02-.67.35-.65.73.07 1.47-.36 2.93-1.22 4.14-.22.31-.15.74.16.96.31.22.74.15.96-.16 1.07-1.5 1.6-3.31 1.51-5.14-.02-.38-.35-.67-.73-.65l-.03.12zM5.5 19.5c3.8 1.2 8.2 1.2 12 0 .5-.16.8.38.3.54-4.2 1.3-9 1.3-13.2 0-.5-.16-.2-.7.3-.54h.6z"/>
+            </svg>
+          </span>
+        ),
+      },
+      {
+        name: 'Python',
+        pct: 80,
+        icon: (
+          <span className="skill-tech-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M11.91 2c-5.06 0-4.74 2.19-4.74 2.19l.01 2.27h4.82v.69H5.19S2 6.8 2 11.95c0 5.14 2.78 4.96 2.78 4.96h1.65v-2.32s-.09-2.78 2.73-2.78h4.7v-.71s.36-4.09-2.04-4.09h-.91V2zm-2.58 1.44c.46 0 .84.38.84.84 0 .47-.38.85-.84.85a.85.85 0 01-.85-.85c0-.46.38-.84.85-.84zm2.76 18.56c5.06 0 4.74-2.19 4.74-2.19l-.01-2.27H12.2v-.69h6.81s3.19.35 3.19-4.8c0-5.14-2.78-4.96-2.78-4.96h-1.65v2.32s.09 2.78-2.73 2.78h-4.7v.71s-.36 4.09 2.04 4.09h.91v4.81zm2.58-1.44c-.46 0-.84-.38-.84-.84 0-.47.38-.85.84-.85.47 0 .85.38.85.85 0 .46-.38.84-.85.84z"/>
+            </svg>
+          </span>
+        ),
+      },
+      {
+        name: 'SQL',
+        pct: 80,
+        icon: (
+          <span className="skill-tech-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M12 3C7.58 3 4 4.79 4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7c0-2.21-3.58-4-8-4zm0 2c3.87 0 6 1.5 6 2s-2.13 2-6 2-6-1.5-6-2 2.13-2 6-2zm-6 4.87C7.64 10.59 9.68 11 12 11s4.36-.41 6-1.13V12c0 .5-2.13 2-6 2s-6-1.5-6-2V9.87zm0 5C7.64 15.59 9.68 16 12 16s4.36-.41 6-1.13V17c0 .5-2.13 2-6 2s-6-1.5-6-2v-2.13z"/>
+            </svg>
+          </span>
+        ),
+      },
     ],
   },
   {
     category: 'Frontend & UI Systems',
     items: [
-      { name: 'HTML', pct: 85, icon: '✦' },
-      { name: 'CSS', pct: 85, icon: '◈' },
-      { name: 'Tailwind CSS', pct: 80, icon: '≋' },
-      { name: 'Bootstrap', pct: 80, icon: '🅱' },
-      { name: 'JavaScript', pct: 80, icon: 'JS' },
-      { name: 'React.js', pct: 55, icon: '⚛' },
+      { name: 'HTML', pct: 85, icon: <span className="skill-tech-badge tag-text">HTML</span> },
+      { name: 'CSS', pct: 85, icon: <span className="skill-tech-badge tag-text">CSS</span> },
+      { name: 'Tailwind CSS', pct: 80, icon: <span className="skill-tech-badge tag-text">TW</span> },
+      { name: 'Bootstrap', pct: 80, icon: <span className="skill-tech-badge tag-text">BS</span> },
+      { name: 'JavaScript', pct: 80, icon: <span className="skill-tech-badge tag-text">JS</span> },
+      { name: 'React.js', pct: 55, icon: <span className="skill-tech-badge tag-text">⚛</span> },
     ],
   },
   {
     category: 'Backend & Intelligence',
     items: [
-      { name: 'Node.js & Express', pct: 82, icon: '⬢' },
-      { name: 'REST APIs & Webhooks', pct: 88, icon: '⇄' },
-      { name: 'AI & LLM Integration', pct: 80, icon: '✦' },
-      { name: 'Database Architecture', pct: 82, icon: '🗄' },
-      { name: 'Git & GitHub Workflows', pct: 90, icon: '⌥' },
+      { name: 'Node.js & Express', pct: 82, icon: <span className="skill-tech-badge tag-text">NODE</span> },
+      { name: 'REST APIs & Webhooks', pct: 88, icon: <span className="skill-tech-badge tag-text">API</span> },
+      { name: 'AI & LLM Integration', pct: 80, icon: <span className="skill-tech-badge tag-text">AI</span> },
+      { name: 'Database Architecture', pct: 82, icon: <span className="skill-tech-badge tag-text">DB</span> },
+      { name: 'Git & GitHub Workflows', pct: 90, icon: <span className="skill-tech-badge tag-text">GIT</span> },
     ],
   },
 ];
@@ -950,18 +980,55 @@ export default function PortfolioPage() {
             <ScrollReveal>
               <span className="section-eyebrow">04 — JOURNEY</span>
               <h2 className="section-head-title">
-                Professional <em>Experience</em>
+                Internship / <em>Training</em>
               </h2>
-              <p className="section-head-subtitle">
-                Applied engineering and design work within fast-paced internship environments.
-              </p>
             </ScrollReveal>
 
             <div className="timeline-stem-wrapper">
               <div className="timeline-stem-line" />
 
-              {/* AZHIZEN */}
+              {/* STACK QUEUE */}
               <div className="timeline-event-card glass-surface">
+                <div className="timeline-stem-node" />
+                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff' }}>
+                    STACK QUEUE <span style={{ color: 'var(--wine-light)' }}>— UI/UX Design</span>
+                  </h3>
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.74rem',
+                      color: 'var(--wine-light)',
+                      background: 'rgba(230,27,77,0.12)',
+                      padding: '4px 12px',
+                      borderRadius: '999px',
+                      border: '1px solid var(--wine-border)',
+                    }}
+                  >
+                    10 JUL 2024 — 24 JUL 2024
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.95rem', color: 'var(--text-platinum)', margin: '14px 0', lineHeight: 1.8 }}>
+                  <p>
+                    • Completed intensive hands-on training focusing on modern UI/UX design paradigms and design thinking.
+                  </p>
+                  <p>
+                    • Sharpened core designing capabilities and creative problem-solving by building interactive screen flows.
+                  </p>
+                  <p>
+                    • Crafted responsive prototypes, user-centric wireframes, and design systems focused on visual ergonomics.
+                  </p>
+                </div>
+                <div className="project-tags-deck" style={{ margin: 0 }}>
+                  <span className="tech-tag-chip">UI/UX Design</span>
+                  <span className="tech-tag-chip">Creative Design</span>
+                  <span className="tech-tag-chip">Wireframing</span>
+                  <span className="tech-tag-chip">Figma</span>
+                </div>
+              </div>
+
+              {/* AZHIZEN */}
+              <div className="timeline-event-card glass-surface" style={{ marginTop: '28px' }}>
                 <div className="timeline-stem-node" />
                 <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff' }}>
@@ -981,48 +1048,22 @@ export default function PortfolioPage() {
                     16 JUN 2025 — 30 JUN 2025
                   </span>
                 </div>
-                <p style={{ fontSize: '0.94rem', color: 'var(--text-muted)', margin: '14px 0' }}>
-                  Developed intelligent, AI-powered web applications and strengthened full-stack engineering
-                  workflows by integrating AI models directly into modern frontend architectures.
-                </p>
+                <div style={{ fontSize: '0.95rem', color: 'var(--text-platinum)', margin: '14px 0', lineHeight: 1.8 }}>
+                  <p>
+                    • Completed specialized training in cutting-edge full-stack web engineering and intelligent software workflows.
+                  </p>
+                  <p>
+                    • Developed and strengthened modern web development skills seamlessly integrated with AI tools and automation.
+                  </p>
+                  <p>
+                    • Engineered dynamic, responsive frontend interfaces with optimized component architectures and API integrations.
+                  </p>
+                </div>
                 <div className="project-tags-deck" style={{ margin: 0 }}>
-                  <span className="tech-tag-chip">AI Integration</span>
+                  <span className="tech-tag-chip">Web Development</span>
+                  <span className="tech-tag-chip">AI Tools</span>
                   <span className="tech-tag-chip">React</span>
                   <span className="tech-tag-chip">Python</span>
-                  <span className="tech-tag-chip">REST APIs</span>
-                </div>
-              </div>
-
-              {/* STACK QUEUE */}
-              <div className="timeline-event-card glass-surface" style={{ marginTop: '28px' }}>
-                <div className="timeline-stem-node" />
-                <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff' }}>
-                    STACK QUEUE <span style={{ color: 'var(--wine-light)' }}>— UI/UX Design Intern</span>
-                  </h3>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '0.74rem',
-                      color: 'var(--wine-light)',
-                      background: 'rgba(230,27,77,0.12)',
-                      padding: '4px 12px',
-                      borderRadius: '999px',
-                      border: '1px solid var(--wine-border)',
-                    }}
-                  >
-                    10 JUL 2024 — 24 JUL 2024
-                  </span>
-                </div>
-                <p style={{ fontSize: '0.94rem', color: 'var(--text-muted)', margin: '14px 0' }}>
-                  Honed user-centered thinking, interface ergonomics, design systems, and responsive wireframing
-                  to translate complex user journeys into delightful, intuitive screens.
-                </p>
-                <div className="project-tags-deck" style={{ margin: 0 }}>
-                  <span className="tech-tag-chip">UI/UX Systems</span>
-                  <span className="tech-tag-chip">Figma</span>
-                  <span className="tech-tag-chip">Design Ergonomics</span>
-                  <span className="tech-tag-chip">Prototyping</span>
                 </div>
               </div>
             </div>

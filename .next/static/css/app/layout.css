@@ -1294,6 +1294,35 @@ body {
   margin-bottom: 12px;
 }
 
+.skill-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(230, 27, 77, 0.12);
+  border: 1px solid var(--wine-border);
+  color: var(--wine-light);
+  transition: all var(--transition-fast);
+}
+
+.skill-widget:hover .skill-tech-badge {
+  background: rgba(230, 27, 77, 0.25);
+  border-color: var(--wine-light);
+  color: #ffffff;
+  box-shadow: 0 0 12px var(--wine-glow);
+  transform: scale(1.08);
+}
+
+.skill-tech-badge.tag-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+
 .skill-meter-track {
   height: 6px;
   background: rgba(255, 255, 255, 0.08);
