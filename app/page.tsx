@@ -1086,6 +1086,7 @@ export default function PortfolioPage() {
             </ScrollReveal>
 
             <div className="cert-deck-grid">
+              {/* Python Certification - Bhumi supported by CGI */}
               <div className="cert-capsule">
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
@@ -1109,14 +1110,18 @@ export default function PortfolioPage() {
                     </span>
                   </div>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    Full Stack Web Engineering
+                    Python Certification
                   </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Specialization in Modern React &amp; Scalable Backends
+                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                    Bhumi supported by CGI
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                    Industry-recognized practical Python programming validation.
                   </p>
                 </div>
               </div>
 
+              {/* NPTEL Cloud Computing - Elite */}
               <div className="cert-capsule">
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
@@ -1129,25 +1134,30 @@ export default function PortfolioPage() {
                         alignItems: 'center',
                         gap: '4px',
                         fontSize: '0.72rem',
-                        color: '#10b981',
-                        background: 'rgba(16,185,129,0.1)',
-                        border: '1px solid rgba(16,185,129,0.25)',
+                        color: 'var(--wine-light)',
+                        background: 'rgba(230,27,77,0.15)',
+                        border: '1px solid var(--wine-border)',
                         padding: '3px 10px',
                         borderRadius: '999px',
+                        fontWeight: 600,
                       }}
                     >
-                      <BadgeCheck size={14} /> VERIFIED
+                      ★ ELITE
                     </span>
                   </div>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    AI-Driven Web Development
+                    Cloud Computing
                   </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Azhizen Practical Architecture &amp; LLM Engineering
+                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                    NPTEL — Elite Certificate
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                    Distributed architectures, virtualization, and cloud infrastructure paradigms.
                   </p>
                 </div>
               </div>
 
+              {/* SQL Basics - Online Certification */}
               <div className="cert-capsule">
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
@@ -1171,10 +1181,83 @@ export default function PortfolioPage() {
                     </span>
                   </div>
                   <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    UI/UX Design Systems
+                    SQL Basics
                   </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                    Stack Queue Usability &amp; Design Architecture
+                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                    Online Certification
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                    Relational database querying, schema structuring, and data manipulation.
+                  </p>
+                </div>
+              </div>
+
+              {/* Basic of Python - UniAthena */}
+              <div className="cert-capsule">
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <div className="edu-icon-badge">
+                      <Award size={20} />
+                    </div>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '0.72rem',
+                        color: '#10b981',
+                        background: 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.25)',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                      }}
+                    >
+                      <BadgeCheck size={14} /> VERIFIED
+                    </span>
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                    Basic of Python
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                    UniAthena
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                    Foundations of Python syntax, logic building, and data structures.
+                  </p>
+                </div>
+              </div>
+
+              {/* AZHIZEN Project Completion - Movies Spot */}
+              <div className="cert-capsule">
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
+                    <div className="edu-icon-badge">
+                      <Award size={20} />
+                    </div>
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        fontSize: '0.72rem',
+                        color: '#10b981',
+                        background: 'rgba(16,185,129,0.1)',
+                        border: '1px solid rgba(16,185,129,0.25)',
+                        padding: '3px 10px',
+                        borderRadius: '999px',
+                      }}
+                    >
+                      <BadgeCheck size={14} /> PROJECT
+                    </span>
+                  </div>
+                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                    Movies Spot
+                  </h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                    AZHIZEN Project Completion
+                  </p>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                    Full-featured web application project developed during internship tenure.
                   </p>
                 </div>
               </div>
