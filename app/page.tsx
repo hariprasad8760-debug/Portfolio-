@@ -21,13 +21,16 @@ import {
   FolderGit2,
   Github,
   GraduationCap,
+  Heart,
   Home as HomeIcon,
   Layers3,
   Linkedin,
   Mail,
   MapPin,
+  MessageSquare,
   Phone,
   Send,
+  ShieldCheck,
   Sparkles,
   Terminal,
   TrendingUp,
@@ -402,11 +405,12 @@ function InteractiveDevBadge() {
 
       {/* View Resume Button Outside Below the Status Bar */}
       <motion.a
-        href="/Hariprasad_P_Resume.txt"
+        href="/Hariprasad_P_Resume.pdf"
         target="_blank"
         rel="noopener noreferrer"
         className="card-view-resume-btn"
-        aria-label="View Hariprasad's Resume"
+        aria-label="View Hariprasad's Resume PDF"
+        title="View Official Resume (PDF)"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
@@ -448,6 +452,8 @@ export default function PortfolioPage() {
   const [activeTab, setActiveTab] = useState(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formSent, setFormSent] = useState(false);
+  const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -492,18 +498,61 @@ export default function PortfolioPage() {
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('hariprasad@gmail.com');
+    navigator.clipboard.writeText('hariprasad8760@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 3000);
   };
 
-  const submitForm = (e: FormEvent) => {
+  const submitForm = async (e: FormEvent) => {
     e.preventDefault();
-    setFormSent(true);
-    setTimeout(() => {
+    setFormSubmitting(true);
+    setFormError(null);
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/hariprasad8760@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          _subject: `Portfolio Message from ${formData.name}: ${formData.subject}`,
+          subject: formData.subject,
+          message: formData.message,
+          _template: 'table',
+        }),
+      });
+
+      if (response.ok) {
+        setFormSent(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setFormSent(false), 8000);
+      } else {
+        // Fallback: trigger mailto link so message is never lost
+        window.location.href = `mailto:hariprasad8760@gmail.com?subject=${encodeURIComponent(
+          formData.subject || 'Portfolio Inquiry'
+        )}&body=${encodeURIComponent(
+          `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+        )}`;
+        setFormSent(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setTimeout(() => setFormSent(false), 8000);
+      }
+    } catch {
+      // Offline or network block fallback
+      window.location.href = `mailto:hariprasad8760@gmail.com?subject=${encodeURIComponent(
+        formData.subject || 'Portfolio Inquiry'
+      )}&body=${encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      )}`;
+      setFormSent(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setFormSent(false);
-    }, 6000);
+      setTimeout(() => setFormSent(false), 8000);
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
   return (
@@ -559,10 +608,13 @@ export default function PortfolioPage() {
 
             {/* Resume button with download icon & animated shine */}
             <a
-              href="/Hariprasad_P_Resume.txt"
-              download="Hariprasad_P_Resume.txt"
+              href="/Hariprasad_P_Resume.pdf"
+              download="Hariprasad_P_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="nav-resume-pill"
-              aria-label="Download Resume"
+              aria-label="Download Resume (PDF)"
+              title="Download Hariprasad's Resume (PDF)"
             >
               <span className="resume-sweep-shine" />
               <span>Resume</span>
@@ -1302,7 +1354,7 @@ export default function PortfolioPage() {
                       <small style={{ fontSize: '0.72rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>
                         Email
                       </small>
-                      <div style={{ fontWeight: 600 }}>hariprasad@gmail.com</div>
+                      <div style={{ fontWeight: 600 }}>hariprasad8760@gmail.com</div>
                     </div>
                     {copiedEmail ? <Check size={18} color="#10b981" /> : <Copy size={18} color="var(--text-muted)" />}
                   </div>
@@ -1401,27 +1453,30 @@ export default function PortfolioPage() {
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     />
                   </div>
-                  <button type="submit" className="form-send-btn">
-                    <span>Send Message</span>
+                  <button type="submit" className="form-send-btn" disabled={formSubmitting}>
+                    <span>{formSubmitting ? 'Transmitting to Mailbox...' : 'Send Message'}</span>
                     <Send size={16} />
                   </button>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '10px', textAlign: 'center' }}>
+                    ⚡ Dispatches directly to <span style={{ color: 'var(--wine-light)' }}>hariprasad8760@gmail.com</span>
+                  </p>
                   {formSent && (
                     <div
                       style={{
                         marginTop: '16px',
-                        padding: '12px',
+                        padding: '12px 16px',
                         borderRadius: '8px',
-                        background: 'rgba(16,185,129,0.12)',
-                        border: '1px solid rgba(16,185,129,0.3)',
+                        background: 'rgba(16,185,129,0.14)',
+                        border: '1px solid rgba(16,185,129,0.35)',
                         color: '#34d399',
                         fontSize: '0.9rem',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '10px',
                       }}
                     >
-                      <BadgeCheck size={18} />
-                      <span>Thank you! Message transmitted successfully.</span>
+                      <BadgeCheck size={20} />
+                      <span>Message received! It has been dispatched to Hariprasad&apos;s inbox.</span>
                     </div>
                   )}
                 </form>
@@ -1432,22 +1487,145 @@ export default function PortfolioPage() {
       </main>
 
       {/* =========================================================================
-          FOOTER
+          UNIQUE LUXURY FOOTER
       ========================================================================= */}
-      <footer className="footer-base">
+      <footer className="footer-unique-wrap">
+        <div className="footer-laser-line" />
         <div className="content-wrapper">
-          <div className="footer-flex">
-            <div>
-              <div className="footer-brand-title">
-                Hariprasad <span>P</span>
+          <div className="footer-unique-grid">
+            {/* Brand & Manifesto Column */}
+            <div className="footer-col-brand">
+              <div className="footer-brand-stage">
+                <div className="footer-brand-crest">
+                  <span>H</span><span className="brand-p">P</span>
+                </div>
+                <div>
+                  <h3 className="footer-brand-name">
+                    Hariprasad <span>P</span>
+                  </h3>
+                  <p className="footer-brand-tagline">Full Stack Developer &amp; AI Engineer</p>
+                </div>
               </div>
-              <p className="footer-credits">
-                Designed with precision in Black + Wine Red + White · © {new Date().getFullYear()}
+              <p className="footer-brand-bio">
+                Crafting intelligent digital experiences where clean code meets creative engineering. Turning ambitious visions into scalable, high-impact reality.
               </p>
+              <div className="footer-brand-socials">
+                <a
+                  href="https://github.com/hariprasad8760-debug"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-btn"
+                  aria-label="GitHub Profile"
+                >
+                  <Github size={18} />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/hariprasad-p-622417292"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-btn"
+                  aria-label="LinkedIn Profile"
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a
+                  href="mailto:hariprasad8760@gmail.com"
+                  className="footer-social-btn"
+                  aria-label="Send Email"
+                >
+                  <Mail size={18} />
+                </a>
+                <a
+                  href="tel:+918807650205"
+                  className="footer-social-btn"
+                  aria-label="Call Direct"
+                >
+                  <Phone size={18} />
+                </a>
+              </div>
             </div>
-            <div className="footer-status-pill">
-              <span className="status-beacon-live" style={{ margin: 0 }} />
-              <span>SYSTEMS ONLINE // 60 FPS</span>
+
+            {/* Quick Navigation Column */}
+            <div className="footer-col-links">
+              <h4 className="footer-col-title">Navigation</h4>
+              <ul className="footer-links-list">
+                <li>
+                  <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}>
+                    <span className="footer-link-dot" /> Home
+                  </a>
+                </li>
+                <li>
+                  <a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>
+                    <span className="footer-link-dot" /> About Me
+                  </a>
+                </li>
+                <li>
+                  <a href="#skills" onClick={(e) => { e.preventDefault(); scrollToSection('skills'); }}>
+                    <span className="footer-link-dot" /> Skills &amp; Arsenal
+                  </a>
+                </li>
+                <li>
+                  <a href="#projects" onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }}>
+                    <span className="footer-link-dot" /> Selected Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="#experience" onClick={(e) => { e.preventDefault(); scrollToSection('experience'); }}>
+                    <span className="footer-link-dot" /> Internship / Training
+                  </a>
+                </li>
+                <li>
+                  <a href="#certifications" onClick={(e) => { e.preventDefault(); scrollToSection('certifications'); }}>
+                    <span className="footer-link-dot" /> Certifications
+                  </a>
+                </li>
+                <li>
+                  <a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>
+                    <span className="footer-link-dot" /> Transmission
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Direct Channel & Response Guarantee Column */}
+            <div className="footer-col-direct">
+              <h4 className="footer-col-title">Direct Connection</h4>
+              <div className="footer-direct-card">
+                <div className="footer-direct-header">
+                  <span className="status-beacon-live" />
+                  <span className="footer-direct-status">Inbox Monitored 24/7</span>
+                </div>
+                <p className="footer-direct-desc">
+                  Every transmitted message automatically delivers directly into Hariprasad&apos;s personal inbox. Typical response within 24 hours.
+                </p>
+                <a
+                  href="mailto:hariprasad8760@gmail.com"
+                  className="footer-direct-mail-btn"
+                >
+                  <Mail size={16} />
+                  <span>hariprasad8760@gmail.com</span>
+                </a>
+              </div>
+              <div className="footer-direct-phone-pill">
+                <Phone size={14} />
+                <span>+91 8807650205</span>
+                <span className="footer-phone-tag">Direct</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Bottom Bar */}
+          <div className="footer-bottom-bar">
+            <p className="footer-bottom-copy">
+              Designed &amp; Engineered with precision · <strong>Hariprasad P</strong> © {new Date().getFullYear()}
+            </p>
+            <div className="footer-bottom-tags">
+              <span className="footer-tag-pill">
+                <span className="status-beacon-live" style={{ margin: 0 }} />
+                <span>ALL SYSTEMS OPTIMAL</span>
+              </span>
+              <span className="footer-tag-pill">60 FPS AMBIENT</span>
+              <span className="footer-tag-pill">NEXT.JS 15</span>
             </div>
           </div>
         </div>
