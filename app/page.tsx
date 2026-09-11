@@ -17,6 +17,7 @@ import {
   Code2,
   Copy,
   ExternalLink,
+  Eye,
   FileText,
   FolderGit2,
   Github,
@@ -35,6 +36,7 @@ import {
   Terminal,
   TrendingUp,
   User,
+  X,
 } from 'lucide-react';
 
 /* =========================================================================
@@ -131,6 +133,7 @@ interface Project {
   tags: string[];
   githubUrl: string;
   metric: string;
+  image?: string;
 }
 
 const PROJECTS: Project[] = [
@@ -141,6 +144,7 @@ const PROJECTS: Project[] = [
     tags: ['Security', 'Full Stack', 'Verification', 'Privacy'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
     metric: 'Secure Verification',
+    image: '/projects/digital-id.png',
   },
   {
     title: 'ZENO AI',
@@ -149,6 +153,7 @@ const PROJECTS: Project[] = [
     tags: ['Next.js', 'Python', 'AI / OCR', 'Browser Extension'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
     metric: 'Multi-AI Powered',
+    image: '/projects/zeno.png',
   },
   {
     title: 'Tracklytics',
@@ -157,6 +162,77 @@ const PROJECTS: Project[] = [
     tags: ['Voice AI', 'React', 'Analytics', 'Dashboard'],
     githubUrl: 'https://github.com/hariprasad8760-debug',
     metric: 'Hands-Free Control',
+    image: '/projects/tracklytics.png',
+  },
+];
+
+interface CertificateItem {
+  id: string;
+  title: string;
+  issuer: string;
+  badgeText: string;
+  badgeType: 'elite' | 'verified' | 'project';
+  desc: string;
+  image?: string;
+  period?: string;
+  credentialInfo?: string;
+}
+
+const CERTIFICATES: CertificateItem[] = [
+  {
+    id: 'nptel-cloud',
+    title: 'Cloud Computing',
+    issuer: 'NPTEL — IIT Kharagpur (Funded by MoE, Govt. of India)',
+    badgeText: '★ ELITE (60%)',
+    badgeType: 'elite',
+    desc: '12-week comprehensive program covering virtualization, cloud storage architectures, distributed systems, and modern infrastructure paradigms.',
+    image: '/certificates/nptel-cloud-computing.jpg',
+    period: 'Jul - Oct 2025',
+    credentialInfo: 'Roll No: NPTEL25CS107S370400220 · IIT Kharagpur & Swayam',
+  },
+  {
+    id: 'cgi-python',
+    title: 'Python Programming',
+    issuer: 'Bhumi (Supported by CGI)',
+    badgeText: 'VERIFIED',
+    badgeType: 'verified',
+    desc: 'Industry-partnered Python curriculum covering logic design, algorithmic problem solving, and practical Python implementations.',
+    image: '/certificates/cgi-bhumi-python.jpg',
+    period: 'Oct 2023 - Mar 2024',
+    credentialInfo: 'Certificate ID: BH245543 · Issued 24th May 2024',
+  },
+  {
+    id: 'uniathena-python',
+    title: 'Basics of Python',
+    issuer: 'UniAthena (Cambridge International Qualifications, UK)',
+    badgeText: 'VERIFIED',
+    badgeType: 'verified',
+    desc: 'Foundations of Python syntax, data structures, logic design, and algorithmic problem solving with blockchain verification.',
+    image: '/certificates/uniathena-basics-of-python.jpg',
+    period: 'January 2026',
+    credentialInfo: 'Blockchain ID: 1B5F-2D3E-9A7F · CIQ UK & FEDE Europe',
+  },
+  {
+    id: 'azhizen-movies-spot',
+    title: 'Movies Spot (Project Completion)',
+    issuer: 'Azhizen Solutions — Summer Internship Program',
+    badgeText: 'GRADE A+',
+    badgeType: 'project',
+    desc: 'Full-featured web application project developed during internship tenure under mentorship, achieving Grade A+ standard of execution.',
+    image: '/certificates/azhizen-movies-spot.jpg',
+    period: 'Summer Internship 2025',
+    credentialInfo: 'Grade: A+ · Head System Developer Mentorship',
+  },
+  {
+    id: 'great-learning-sql',
+    title: 'SQL Projects for Beginners',
+    issuer: 'Great Learning Academy',
+    badgeText: 'VERIFIED',
+    badgeType: 'verified',
+    desc: 'Relational database architecture, queries, aggregation functions, joins, and hands-on SQL project execution.',
+    image: '/certificates/great-learning-sql.jpg',
+    period: 'June 2024',
+    credentialInfo: 'Verification Code: GAPHXJXQ · Great Learning Academy',
   },
 ];
 
@@ -450,10 +526,19 @@ export default function PortfolioPage() {
   const [formSent, setFormSent] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', role: '', description: '' });
+  const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedCert(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -501,88 +586,42 @@ export default function PortfolioPage() {
 
   const [formNotice, setFormNotice] = useState<string | null>(null);
 
-  const getMailtoUrl = (customData = formData) => {
-    const sub = encodeURIComponent(
-      customData.subject
-        ? `[Portfolio Inquiry] ${customData.subject} - from ${customData.name || 'Visitor'}`
-        : `[Portfolio Inquiry] from ${customData.name || 'Visitor'}`
-    );
-    const body = encodeURIComponent(
-      `Hello Hariprasad,\n\n${customData.message || ''}\n\n---\nSender Details:\nName: ${customData.name || 'Not provided'}\nEmail: ${customData.email || 'Not provided'}`
-    );
-    return `mailto:hariprasad8760@gmail.com?subject=${sub}&body=${body}`;
-  };
-
-  const getGmailWebUrl = (customData = formData) => {
-    const sub = encodeURIComponent(
-      customData.subject
-        ? `[Portfolio Inquiry] ${customData.subject} - from ${customData.name || 'Visitor'}`
-        : `[Portfolio Inquiry] from ${customData.name || 'Visitor'}`
-    );
-    const body = encodeURIComponent(
-      `Hello Hariprasad,\n\n${customData.message || ''}\n\n---\nSender Details:\nName: ${customData.name || 'Not provided'}\nEmail: ${customData.email || 'Not provided'}`
-    );
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=hariprasad8760@gmail.com&su=${sub}&body=${body}`;
-  };
-
-  const openInGmailDirect = () => {
-    if (!formData.name && !formData.message) {
-      window.open('https://mail.google.com/mail/?view=cm&fs=1&to=hariprasad8760@gmail.com', '_blank');
-      return;
-    }
-    const gmailUrl = getGmailWebUrl();
-    window.open(gmailUrl, '_blank') || (window.location.href = getMailtoUrl());
-  };
-
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
     setFormSubmitting(true);
+    setFormSent(false);
+    setFormError(null);
     setFormNotice(null);
 
-    const snapshotData = { ...formData };
+    const senderName = formData.name.trim() || 'Visitor';
+    const senderRole = formData.role.trim() || 'Role Opportunity';
+    const senderDesc = formData.description.trim() || '';
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/hariprasad8760@gmail.com', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: snapshotData.name,
-          email: snapshotData.email,
-          _subject: `Portfolio Message from ${snapshotData.name}: ${snapshotData.subject || 'New Contact'}`,
-          subject: snapshotData.subject,
-          message: snapshotData.message,
-          _template: 'table',
+          name: senderName,
+          role: senderRole,
+          description: senderDesc,
         }),
       });
 
-      const data = await response.json().catch(() => null);
+      const data = await res.json();
 
-      if (data && (data.success === 'true' || data.success === true)) {
+      if (res.ok && data.success) {
         setFormSent(true);
-        setFormNotice("Message received! Your transmission has been dispatched to Hariprasad's inbox.");
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setFormSent(false), 9000);
+        setFormNotice('✅ Message sent successfully! Hariprasad will receive your details in his email.');
+        setFormData({ name: '', role: '', description: '' });
+        setTimeout(() => setFormSent(false), 8000);
       } else {
-        // FormSubmit requires one-time activation or service delayed;
-        // Launch Gmail / Mail client with pre-filled content so message is never lost!
-        setFormSent(true);
-        setFormNotice("Connecting directly via your email client to ensure instant delivery to Hariprasad!");
-        const gmailUrl = getGmailWebUrl(snapshotData);
-        window.open(gmailUrl, '_blank') || (window.location.href = getMailtoUrl(snapshotData));
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        setTimeout(() => setFormSent(false), 9000);
+        setFormError(data.message || 'Unable to deliver message right now. Please try again.');
       }
     } catch {
-      // Offline or network block: guaranteed direct email dispatch
-      setFormSent(true);
-      setFormNotice("Opening your email client to dispatch directly to hariprasad8760@gmail.com.");
-      const gmailUrl = getGmailWebUrl(snapshotData);
-      window.open(gmailUrl, '_blank') || (window.location.href = getMailtoUrl(snapshotData));
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setTimeout(() => setFormSent(false), 9000);
+      setFormError('Network error while sending. Please try again.');
     } finally {
       setFormSubmitting(false);
     }
@@ -1040,6 +1079,15 @@ export default function PortfolioPage() {
                     <p style={{ fontSize: '0.8rem', color: 'var(--wine-light)', marginBottom: '12px' }}>
                       {proj.category}
                     </p>
+                    {proj.image && (
+                      <div className="project-img-banner-wrap">
+                        <img
+                          src={proj.image}
+                          alt={`${proj.title} UI Preview`}
+                          className="project-img-banner"
+                        />
+                      </div>
+                    )}
                     <p className="project-tile-desc">{proj.desc}</p>
                     <div className="project-tags-deck">
                       {proj.tags.map((t) => (
@@ -1189,181 +1237,92 @@ export default function PortfolioPage() {
             </ScrollReveal>
 
             <div className="cert-deck-grid">
-              {/* Python Certification - Bhumi supported by CGI */}
-              <div className="cert-capsule">
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
-                    <div className="edu-icon-badge">
-                      <Award size={20} />
+              {CERTIFICATES.map((cert) => (
+                <div
+                  key={cert.id}
+                  className="cert-capsule"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setSelectedCert(cert)}
+                >
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <div className="edu-icon-badge">
+                        <Award size={20} />
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            fontSize: '0.72rem',
+                            color:
+                              cert.badgeType === 'elite'
+                                ? 'var(--wine-light)'
+                                : cert.badgeType === 'project'
+                                ? '#38bdf8'
+                                : '#10b981',
+                            background:
+                              cert.badgeType === 'elite'
+                                ? 'rgba(230,27,77,0.15)'
+                                : cert.badgeType === 'project'
+                                ? 'rgba(56,189,248,0.12)'
+                                : 'rgba(16,185,129,0.1)',
+                            border: `1px solid ${
+                              cert.badgeType === 'elite'
+                                ? 'var(--wine-border)'
+                                : cert.badgeType === 'project'
+                                ? 'rgba(56,189,248,0.3)'
+                                : 'rgba(16,185,129,0.25)'
+                            }`,
+                            padding: '3px 10px',
+                            borderRadius: '999px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          {cert.badgeType === 'verified' && <BadgeCheck size={13} />}
+                          {cert.badgeText}
+                        </span>
+                      </div>
                     </div>
-                    <span
+                    <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
+                      {cert.title}
+                    </h4>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
+                      {cert.issuer}
+                    </p>
+                    <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
+                      {cert.desc}
+                    </p>
+                  </div>
+                  {cert.period && (
+                    <div
                       style={{
-                        display: 'inline-flex',
+                        marginTop: '16px',
+                        paddingTop: '12px',
+                        borderTop: '1px solid rgba(255,255,255,0.06)',
+                        display: 'flex',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '0.72rem',
-                        color: '#10b981',
-                        background: 'rgba(16,185,129,0.1)',
-                        border: '1px solid rgba(16,185,129,0.25)',
-                        padding: '3px 10px',
-                        borderRadius: '999px',
                       }}
                     >
-                      <BadgeCheck size={14} /> VERIFIED
-                    </span>
-                  </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    Python Certification
-                  </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
-                    Bhumi supported by CGI
-                  </p>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Industry-recognized practical Python programming validation.
-                  </p>
-                </div>
-              </div>
-
-              {/* NPTEL Cloud Computing - Elite */}
-              <div className="cert-capsule">
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
-                    <div className="edu-icon-badge">
-                      <Award size={20} />
+                      <span style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>{cert.period}</span>
+                      <span
+                        style={{
+                          color: 'var(--wine-light)',
+                          fontSize: '0.76rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px',
+                          fontWeight: 500,
+                        }}
+                      >
+                        Inspect <ArrowUpRight size={13} />
+                      </span>
                     </div>
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '0.72rem',
-                        color: 'var(--wine-light)',
-                        background: 'rgba(230,27,77,0.15)',
-                        border: '1px solid var(--wine-border)',
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                        fontWeight: 600,
-                      }}
-                    >
-                      ★ ELITE
-                    </span>
-                  </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    Cloud Computing
-                  </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
-                    NPTEL — Elite Certificate
-                  </p>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Distributed architectures, virtualization, and cloud infrastructure paradigms.
-                  </p>
+                  )}
                 </div>
-              </div>
-
-              {/* SQL Basics - Online Certification */}
-              <div className="cert-capsule">
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
-                    <div className="edu-icon-badge">
-                      <Award size={20} />
-                    </div>
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '0.72rem',
-                        color: '#10b981',
-                        background: 'rgba(16,185,129,0.1)',
-                        border: '1px solid rgba(16,185,129,0.25)',
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                      }}
-                    >
-                      <BadgeCheck size={14} /> VERIFIED
-                    </span>
-                  </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    SQL Basics
-                  </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
-                    Online Certification
-                  </p>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Relational database querying, schema structuring, and data manipulation.
-                  </p>
-                </div>
-              </div>
-
-              {/* Basic of Python - UniAthena */}
-              <div className="cert-capsule">
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
-                    <div className="edu-icon-badge">
-                      <Award size={20} />
-                    </div>
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '0.72rem',
-                        color: '#10b981',
-                        background: 'rgba(16,185,129,0.1)',
-                        border: '1px solid rgba(16,185,129,0.25)',
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                      }}
-                    >
-                      <BadgeCheck size={14} /> VERIFIED
-                    </span>
-                  </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    Basic of Python
-                  </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
-                    UniAthena
-                  </p>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Foundations of Python syntax, logic building, and data structures.
-                  </p>
-                </div>
-              </div>
-
-              {/* AZHIZEN Project Completion - Movies Spot */}
-              <div className="cert-capsule">
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
-                    <div className="edu-icon-badge">
-                      <Award size={20} />
-                    </div>
-                    <span
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                        fontSize: '0.72rem',
-                        color: '#10b981',
-                        background: 'rgba(16,185,129,0.1)',
-                        border: '1px solid rgba(16,185,129,0.25)',
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                      }}
-                    >
-                      <BadgeCheck size={14} /> PROJECT
-                    </span>
-                  </div>
-                  <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#ffffff' }}>
-                    Movies Spot
-                  </h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--wine-light)', marginTop: '4px' }}>
-                    AZHIZEN Project Completion
-                  </p>
-                  <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '6px' }}>
-                    Full-featured web application project developed during internship tenure.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -1494,58 +1453,50 @@ export default function PortfolioPage() {
                     />
                   </div>
                   <div className="form-field-unit">
-                    <label>Email Address</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="name@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                  </div>
-                  <div className="form-field-unit">
-                    <label>Subject</label>
+                    <label>Role</label>
                     <input
                       type="text"
                       required
-                      placeholder="Role Opportunity / Project"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      placeholder="e.g. Recruiter / Hiring Manager / Client"
+                      value={formData.role}
+                      onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     />
                   </div>
                   <div className="form-field-unit">
-                    <label>Message</label>
+                    <label>Description</label>
                     <textarea
                       required
                       rows={4}
-                      placeholder="Tell me about your idea or project..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="What would you like to discuss with Hariprasad?"
+                      value={formData.description}
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
                   </div>
-                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                    <button type="submit" className="form-send-btn" style={{ flex: '1 1 180px' }} disabled={formSubmitting}>
-                      <span>{formSubmitting ? 'Transmitting to Mailbox...' : 'Send Message'}</span>
-                      <Send size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={openInGmailDirect}
-                      className="form-send-btn"
-                      style={{
-                        flex: '1 1 180px',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        borderColor: 'rgba(255, 255, 255, 0.18)',
-                        color: '#ffffff',
-                      }}
-                      title="Open draft directly in your Gmail / Mail app"
-                    >
-                      <span>Open in Gmail</span>
-                      <ExternalLink size={16} />
-                    </button>
-                  </div>
+                  <button type="submit" className="form-send-btn" disabled={formSubmitting}>
+                    {formSubmitting ? (
+                      <>
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            width: '16px',
+                            height: '16px',
+                            border: '2px solid rgba(255,255,255,0.4)',
+                            borderTopColor: '#fff',
+                            borderRadius: '50%',
+                            animation: 'spin 0.7s linear infinite',
+                          }}
+                        />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Email</span>
+                        <Send size={16} />
+                      </>
+                    )}
+                  </button>
                   <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '10px', textAlign: 'center' }}>
-                    ⚡ Dispatches directly to <span style={{ color: 'var(--wine-light)' }}>hariprasad8760@gmail.com</span>
+                    ⚡ Sends directly to <span style={{ color: 'var(--wine-light)' }}>hariprasad8760@gmail.com</span>
                   </p>
                   {formSent && (
                     <div
@@ -1563,7 +1514,26 @@ export default function PortfolioPage() {
                       }}
                     >
                       <BadgeCheck size={20} style={{ flexShrink: 0 }} />
-                      <span>{formNotice || 'Message received! It has been dispatched to Hariprasad&apos;s inbox.'}</span>
+                      <span>{formNotice || '✅ Message sent! Hariprasad will receive your details shortly.'}</span>
+                    </div>
+                  )}
+                  {formError && (
+                    <div
+                      style={{
+                        marginTop: '16px',
+                        padding: '12px 16px',
+                        borderRadius: '8px',
+                        background: 'rgba(239, 68, 68, 0.14)',
+                        border: '1px solid rgba(239, 68, 68, 0.35)',
+                        color: '#f87171',
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                      }}
+                    >
+                      <X size={20} style={{ flexShrink: 0 }} />
+                      <span>{formError}</span>
                     </div>
                   )}
                 </form>
@@ -1585,6 +1555,123 @@ export default function PortfolioPage() {
           <ArrowUp size={20} />
         </button>
       )}
+
+      {/* =========================================================================
+          CERTIFICATE PREVIEW LIGHTBOX MODAL
+      ========================================================================= */}
+      <AnimatePresence>
+        {selectedCert && (
+          <motion.div
+            className="cert-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setSelectedCert(null)}
+          >
+            <motion.div
+              className="cert-modal-content"
+              initial={{ scale: 0.93, opacity: 0, y: 25 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.93, opacity: 0, y: 25 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 320 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="cert-modal-header">
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                    <span className="cert-modal-pill">CREDENTIAL VERIFICATION</span>
+                    <span
+                      style={{
+                        fontSize: '0.74rem',
+                        fontWeight: 600,
+                        color:
+                          selectedCert.badgeType === 'elite'
+                            ? 'var(--wine-light)'
+                            : selectedCert.badgeType === 'project'
+                            ? '#38bdf8'
+                            : '#10b981',
+                      }}
+                    >
+                      {selectedCert.badgeText}
+                    </span>
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#ffffff', margin: 0 }}>
+                    {selectedCert.title}
+                  </h3>
+                  <p style={{ fontSize: '0.84rem', color: 'var(--text-dim)', margin: '3px 0 0' }}>
+                    {selectedCert.issuer} {selectedCert.period ? `· ${selectedCert.period}` : ''}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedCert(null)}
+                  className="cert-modal-close-btn"
+                  title="Close preview (Esc)"
+                  aria-label="Close certificate preview"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="cert-modal-body">
+                {selectedCert.image ? (
+                  <div className="cert-modal-img-wrap">
+                    <img
+                      src={selectedCert.image}
+                      alt={`${selectedCert.title} Certificate`}
+                      className="cert-modal-img"
+                    />
+                  </div>
+                ) : (
+                  <div className="cert-modal-placeholder">
+                    <div className="cert-pending-icon">
+                      <Award size={34} color="var(--wine-light)" />
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: '#ffffff', marginTop: '16px' }}>
+                      SQL Certificate Arriving Soon
+                    </h4>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', maxWidth: '440px', textAlign: 'center', marginTop: '8px', lineHeight: '1.6' }}>
+                      Hariprasad is preparing and verifying this credential document. It will be uploaded and accessible here shortly.
+                    </p>
+                    <span className="cert-pending-badge">UPDATE IN PROGRESS</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="cert-modal-footer">
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                  {selectedCert.credentialInfo || 'Verified Document'}
+                </div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  {selectedCert.image && (
+                    <a
+                      href={selectedCert.image}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cert-modal-action-btn primary"
+                      title="Open full size certificate image in new tab"
+                    >
+                      <ExternalLink size={14} />
+                      <span>Open Full Size</span>
+                    </a>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCert(null)}
+                    className="cert-modal-action-btn"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
