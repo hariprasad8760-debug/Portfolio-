@@ -56,12 +56,12 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'projects', name: 'Projects', icon: <Briefcase size={18} /> },
   { id: 'experience', name: 'Experience', icon: <TrendingUp size={18} /> },
   { id: 'certifications', name: 'Certifications', icon: <Award size={18} /> },
-  { id: 'contact', name: 'Contact', icon: <Send size={18} /> },
+  { id: 'contact', name: 'Contact Me', icon: <Send size={18} /> },
 ];
 
 interface SkillCategory {
   category: string;
-  items: { name: string; pct: number; icon: React.ReactNode }[];
+  items: { name: string; icon: React.ReactNode }[];
 }
 
 const SKILL_CATEGORIES: SkillCategory[] = [
@@ -70,7 +70,6 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     items: [
       {
         name: 'Java',
-        pct: 85,
         icon: (
           <span className="skill-tech-badge">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -81,7 +80,6 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       },
       {
         name: 'Python',
-        pct: 80,
         icon: (
           <span className="skill-tech-badge">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -92,7 +90,6 @@ const SKILL_CATEGORIES: SkillCategory[] = [
       },
       {
         name: 'SQL',
-        pct: 80,
         icon: (
           <span className="skill-tech-badge">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -106,22 +103,20 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   {
     category: 'Frontend & UI Systems',
     items: [
-      { name: 'HTML', pct: 85, icon: <span className="skill-tech-badge tag-text">HTML</span> },
-      { name: 'CSS', pct: 85, icon: <span className="skill-tech-badge tag-text">CSS</span> },
-      { name: 'Tailwind CSS', pct: 80, icon: <span className="skill-tech-badge tag-text">TW</span> },
-      { name: 'Bootstrap', pct: 80, icon: <span className="skill-tech-badge tag-text">BS</span> },
-      { name: 'JavaScript', pct: 80, icon: <span className="skill-tech-badge tag-text">JS</span> },
-      { name: 'React.js', pct: 55, icon: <span className="skill-tech-badge tag-text">⚛</span> },
+      { name: 'HTML', icon: <span className="skill-tech-badge tag-text">HTML</span> },
+      { name: 'CSS', icon: <span className="skill-tech-badge tag-text">CSS</span> },
+      { name: 'Tailwind CSS', icon: <span className="skill-tech-badge tag-text">TW</span> },
+      { name: 'Bootstrap', icon: <span className="skill-tech-badge tag-text">BS</span> },
+      { name: 'JavaScript', icon: <span className="skill-tech-badge tag-text">JS</span> },
+      { name: 'React.js', icon: <span className="skill-tech-badge tag-text">⚛</span> },
     ],
   },
   {
-    category: 'Backend & Intelligence',
+    category: 'Backend & Tools',
     items: [
-      { name: 'Node.js & Express', pct: 82, icon: <span className="skill-tech-badge tag-text">NODE</span> },
-      { name: 'REST APIs & Webhooks', pct: 88, icon: <span className="skill-tech-badge tag-text">API</span> },
-      { name: 'AI & LLM Integration', pct: 80, icon: <span className="skill-tech-badge tag-text">AI</span> },
-      { name: 'Database Architecture', pct: 82, icon: <span className="skill-tech-badge tag-text">DB</span> },
-      { name: 'Git & GitHub Workflows', pct: 90, icon: <span className="skill-tech-badge tag-text">GIT</span> },
+      { name: 'REST APIs', icon: <span className="skill-tech-badge tag-text">API</span> },
+      { name: 'Database Architecture', icon: <span className="skill-tech-badge tag-text">DB</span> },
+      { name: 'Git & GitHub Workflows', icon: <span className="skill-tech-badge tag-text">GIT</span> },
     ],
   },
 ];
@@ -132,6 +127,7 @@ interface Project {
   desc: string;
   tags: string[];
   githubUrl: string;
+  liveUrl?: string;
   metric: string;
   image?: string;
 }
@@ -142,7 +138,8 @@ const PROJECTS: Project[] = [
     category: 'Security & Verification · Identity Systems',
     desc: 'Digital identity system for secure and easy user verification. Helps manage identity details digitally with better privacy, authentication flow, and accessibility.',
     tags: ['Security', 'Full Stack', 'Verification', 'Privacy'],
-    githubUrl: 'https://github.com/hariprasad8760-debug',
+    githubUrl: 'https://github.com/hariprasad8760-debug/digital-id-main',
+    liveUrl: 'https://digital-id-steel.vercel.app/',
     metric: 'Secure Verification',
     image: '/projects/digital-id.png',
   },
@@ -151,7 +148,8 @@ const PROJECTS: Project[] = [
     category: 'Artificial Intelligence · Full Stack Platform',
     desc: 'Built a full-stack AI platform featuring intelligent chat, OCR, browser extension support, and multiple AI providers. Designed a clean, user-centric interface focused on productivity, automation, and a seamless user experience.',
     tags: ['Next.js', 'Python', 'AI / OCR', 'Browser Extension'],
-    githubUrl: 'https://github.com/hariprasad8760-debug',
+    githubUrl: 'https://github.com/hariprasad8760-debug/Zeno',
+    liveUrl: 'https://zeno-ivory-mu.vercel.app/',
     metric: 'Multi-AI Powered',
     image: '/projects/zeno.png',
   },
@@ -160,9 +158,17 @@ const PROJECTS: Project[] = [
     category: 'Voice Interaction · Analytics & Productivity',
     desc: 'Voice interaction platform implementing voice-based expense and study tracking with word-word activation, continuous conversation, and hands-free dashboard control.',
     tags: ['Voice AI', 'React', 'Analytics', 'Dashboard'],
-    githubUrl: 'https://github.com/hariprasad8760-debug',
+    githubUrl: 'https://github.com/hariprasad8760-debug/Tracklytics',
     metric: 'Hands-Free Control',
     image: '/projects/tracklytics.png',
+  },
+  {
+    title: 'Portfolio',
+    category: 'Modern Web Engineering · Next.js 15 & Framer Motion',
+    desc: 'Custom-built responsive personal portfolio engineered with Next.js 15, React, Framer Motion, and obsidian dark glass aesthetics featuring data-driven project displays, interactive certificate previews, and direct message delivery.',
+    tags: ['Next.js 15', 'TypeScript', 'Framer Motion', 'Tailwind & CSS'],
+    githubUrl: 'https://github.com/hariprasad8760-debug/Portfolio-',
+    metric: 'Clean Architecture',
   },
 ];
 
@@ -411,10 +417,13 @@ function InteractiveDevBadge() {
           <span className="card-spec-tag">FULL STACK // VERIFIED</span>
         </div>
 
-        {/* Multi-layered Avatar Crest */}
+        {/* Fast Red Scanner Beam above image — sweeps every 2 seconds */}
+        <div className="card-red-laser-track">
+          <div className="card-red-laser-beam" />
+        </div>
+
+        {/* Multi-layered Avatar Crest (Enlarged, clean without orbit balls) */}
         <div className="telemetry-avatar-stage">
-          <div className="stage-rotating-orbit" />
-          <div className="stage-rotating-orbit-ccw" />
           <div className="stage-wine-halo" />
           <div className="stage-monogram">
             <img
@@ -653,6 +662,19 @@ export default function PortfolioPage() {
             <span className="brand-text-serif">Hariprasad</span>
             <span className="brand-p-accent">P</span>
           </a>
+
+          {/* Main Bar Direct Shortcuts (Home, About Me, Skills, Projects, Experience, Certifications, Contact Me) */}
+          <nav className="nav-shortcuts-row">
+            {MENU_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="nav-shortcut-link"
+              >
+                <span>{item.name}</span>
+              </button>
+            ))}
+          </nav>
 
           {/* Right Controls: Squircle Icons, Resume Pill, Circular Down Arrow */}
           <div className="nav-controls-group">
@@ -998,17 +1020,9 @@ export default function PortfolioPage() {
             <div className="skills-card-grid">
               {SKILL_CATEGORIES[activeTab].items.map((skill) => (
                 <div key={skill.name} className="skill-widget">
-                  <div className="skill-info-top">
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.2rem' }}>{skill.icon}</span>
-                      <b style={{ color: '#ffffff' }}>{skill.name}</b>
-                    </div>
-                    <span style={{ color: 'var(--wine-light)', fontFamily: 'var(--font-mono)' }}>
-                      {skill.pct}%
-                    </span>
-                  </div>
-                  <div className="skill-meter-track">
-                    <div className="skill-meter-bar" style={{ width: `${skill.pct}%` }} />
+                  <div className="skill-info-clean">
+                    <span className="skill-tech-badge-wrap">{skill.icon}</span>
+                    <span className="skill-title-clean">{skill.name}</span>
                   </div>
                 </div>
               ))}
@@ -1072,7 +1086,7 @@ export default function PortfolioPage() {
                 <div key={proj.title} className="project-tile">
                   <div>
                     <div className="project-top-spec">
-                      <span className="project-case-label">CASE STUDY 0{idx + 1}</span>
+                      <span className="project-case-label">PROJECT 0{idx + 1}</span>
                       <span className="project-metric-tag">{proj.metric}</span>
                     </div>
                     <h3 className="project-tile-title">{proj.title}</h3>
@@ -1108,14 +1122,18 @@ export default function PortfolioPage() {
                       <Github size={16} />
                       <span>Source Code</span>
                     </a>
-                    <button
-                      onClick={() => scrollToSection('contact')}
-                      className="btn-wine-primary"
-                      style={{ padding: '6px 14px', fontSize: '0.82rem', marginLeft: 'auto' }}
-                    >
-                      <span>Inquire</span>
-                      <ArrowUpRight size={14} />
-                    </button>
+                    {proj.liveUrl && (
+                      <a
+                        href={proj.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-wine-primary"
+                        style={{ padding: '6px 14px', fontSize: '0.82rem', marginLeft: 'auto', textDecoration: 'none' }}
+                      >
+                        <span>View</span>
+                        <ExternalLink size={14} />
+                      </a>
+                    )}
                   </div>
                 </div>
               ))}

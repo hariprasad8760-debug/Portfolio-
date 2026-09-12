@@ -169,7 +169,7 @@ body {
 }
 
 .navbar-pill {
-  max-width: 1180px;
+  max-width: 1260px;
   margin: 0 auto;
   position: relative;
   background: rgba(14, 6, 16, 0.82);
@@ -267,6 +267,46 @@ body {
 .nav-brand-link:hover .brand-p-accent {
   transform: scale(1.15) translateY(-1px);
   text-shadow: 0 0 18px var(--wine-light), 0 0 30px var(--wine-vivid);
+}
+
+/* Main Bar Direct Shortcuts Row (One after another) */
+.nav-shortcuts-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-shortcut-link {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-platinum);
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-shortcut-link:hover {
+  color: #ffffff;
+  background: rgba(230, 27, 77, 0.16);
+  border-color: rgba(230, 27, 77, 0.4);
+  box-shadow: 0 0 12px rgba(230, 27, 77, 0.25);
+  transform: translateY(-1px);
+}
+
+.nav-shortcut-link:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 1040px) {
+  .nav-shortcuts-row {
+    display: none;
+  }
 }
 
 /* Right Controls */
@@ -772,105 +812,77 @@ body {
   text-transform: uppercase;
 }
 
-/* Avatar Crest */
+/* Fast Red Laser Scanner Track Above Image (Sweeps every 2 seconds) */
+.card-red-laser-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 6px 0 20px 0;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.card-red-laser-beam {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, var(--wine-vivid) 40%, #ff3b68 70%, #ffffff 85%, transparent 100%);
+  box-shadow: 0 0 12px 2px #ff3b68, 0 0 24px 4px rgba(230, 27, 77, 0.85);
+  animation: laserSweepFast 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes laserSweepFast {
+  0% {
+    left: -45%;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 105%;
+    opacity: 0;
+  }
+}
+
+/* Avatar Crest — Enlarged Image & Clean Presentation (No Orbit Balls) */
 .telemetry-avatar-stage {
   position: relative;
-  width: 124px;
-  height: 124px;
+  width: 154px;
+  height: 154px;
   margin: 0 auto 18px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Premium dual-ring orbit with glowing traveler dot */
-.stage-rotating-orbit {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid rgba(230, 27, 77, 0.2);
-  animation: spinOrbit 8s linear infinite;
-}
-
-.stage-rotating-orbit::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-/* Glowing traveler dot on the orbit ring */
-.stage-rotating-orbit::after {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--wine-vivid);
-  box-shadow: 0 0 10px 3px var(--wine-light), 0 0 22px 6px rgba(230,27,77,0.45);
-}
-
-@keyframes spinOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Counter-clockwise orbit — same ring as CW, second red ball going opposite */
-.stage-rotating-orbit-ccw {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: none;
-  animation: spinOrbitCCW 8s linear infinite;
-}
-
-.stage-rotating-orbit-ccw::after {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--wine-vivid);
-  box-shadow: 0 0 10px 3px var(--wine-light), 0 0 22px 6px rgba(230,27,77,0.45);
-}
-
-@keyframes spinOrbitCCW {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-
 .stage-wine-halo {
   position: absolute;
-  inset: 8px;
+  inset: 4px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(230, 27, 77, 0.35) 0%, rgba(120, 10, 36, 0.1) 60%, transparent 70%);
-  filter: blur(12px);
+  background: radial-gradient(circle, rgba(230, 27, 77, 0.4) 0%, rgba(120, 10, 36, 0.12) 60%, transparent 75%);
+  filter: blur(14px);
 }
 
 .stage-monogram {
   position: relative;
   z-index: 2;
-  width: 92px;
-  height: 92px;
+  width: 136px;
+  height: 136px;
   border-radius: 50%;
   background: linear-gradient(145deg, #1b0712, #080306);
-  border: 2px solid var(--wine-vivid);
-  box-shadow: 0 0 25px var(--wine-glow), inset 0 0 15px rgba(230, 27, 77, 0.35);
+  border: 2.5px solid var(--wine-vivid);
+  box-shadow: 0 0 32px var(--wine-glow), inset 0 0 20px rgba(230, 27, 77, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-family: var(--font-serif);
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: #ffffff;
 }
 
 .stage-avatar-img {
@@ -1296,7 +1308,7 @@ body {
   background: var(--bg-glass-card);
   border: 1px solid var(--wine-border);
   border-radius: var(--radius-md);
-  padding: 22px;
+  padding: 18px 24px;
   transition: all var(--transition-smooth);
 }
 
@@ -1306,20 +1318,34 @@ body {
   box-shadow: 0 10px 25px -10px var(--wine-glow);
 }
 
-.skill-info-top {
+.skill-info-clean {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
+  gap: 16px;
+}
+
+.skill-tech-badge-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skill-title-clean {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.2px;
 }
 
 .skill-tech-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: rgba(230, 27, 77, 0.12);
   border: 1px solid var(--wine-border);
   color: var(--wine-light);
@@ -1330,30 +1356,15 @@ body {
   background: rgba(230, 27, 77, 0.25);
   border-color: var(--wine-light);
   color: #ffffff;
-  box-shadow: 0 0 12px var(--wine-glow);
+  box-shadow: 0 0 14px var(--wine-glow);
   transform: scale(1.08);
 }
 
 .skill-tech-badge.tag-text {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-}
-
-
-.skill-meter-track {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-}
-
-.skill-meter-bar {
-  height: 100%;
-  border-radius: var(--radius-full);
-  background: linear-gradient(90deg, var(--wine-base), var(--wine-light));
-  box-shadow: 0 0 10px var(--wine-glow);
 }
 
 /* Skills Category Navigation (< >) */
