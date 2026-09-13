@@ -1589,19 +1589,75 @@ export default function PortfolioPage() {
                     <div
                       style={{
                         marginTop: '16px',
-                        padding: '12px 16px',
+                        padding: '14px 16px',
                         borderRadius: '8px',
-                        background: 'rgba(239, 68, 68, 0.14)',
-                        border: '1px solid rgba(239, 68, 68, 0.35)',
-                        color: '#f87171',
-                        fontSize: '0.9rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
+                        background: formError.toLowerCase().includes('activation')
+                          ? 'rgba(245, 158, 11, 0.12)'
+                          : 'rgba(239, 68, 68, 0.14)',
+                        border: formError.toLowerCase().includes('activation')
+                          ? '1px solid rgba(245, 158, 11, 0.4)'
+                          : '1px solid rgba(239, 68, 68, 0.35)',
+                        color: formError.toLowerCase().includes('activation') ? '#fde68a' : '#f87171',
+                        fontSize: '0.88rem',
+                        lineHeight: 1.5,
                       }}
                     >
-                      <X size={20} style={{ flexShrink: 0 }} />
-                      <span>{formError}</span>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                        {formError.toLowerCase().includes('activation') ? (
+                          <Mail size={20} style={{ flexShrink: 0, marginTop: '2px', color: '#f59e0b' }} />
+                        ) : (
+                          <X size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
+                        )}
+                        <div style={{ flex: 1 }}>
+                          {formError.toLowerCase().includes('activation') && (
+                            <strong style={{ color: '#fff', display: 'block', marginBottom: '4px', fontSize: '0.92rem' }}>
+                              One-Time Setup: Confirm in Gmail
+                            </strong>
+                          )}
+                          <span>{formError}</span>
+                          <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+                            {formError.toLowerCase().includes('activation') && (
+                              <a
+                                href="https://mail.google.com"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  padding: '7px 14px',
+                                  borderRadius: '6px',
+                                  background: '#f59e0b',
+                                  color: '#000',
+                                  fontWeight: 600,
+                                  fontSize: '0.8rem',
+                                  textDecoration: 'none',
+                                }}
+                              >
+                                Open Gmail ↗
+                              </a>
+                            )}
+                            <a
+                              href={`mailto:hariprasad8760@gmail.com?subject=${encodeURIComponent(`Portfolio Contact: ${formData.name || 'Visitor'} (${formData.role || 'Opportunity'})`)}&body=${encodeURIComponent(`Name: ${formData.name || 'Visitor'}\nRole: ${formData.role || 'Opportunity'}\n\nMessage:\n${formData.description || ''}`)}`}
+                              style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                padding: '7px 14px',
+                                borderRadius: '6px',
+                                background: 'rgba(255,255,255,0.08)',
+                                border: '1px solid rgba(255,255,255,0.2)',
+                                color: '#fff',
+                                fontWeight: 500,
+                                fontSize: '0.8rem',
+                                textDecoration: 'none',
+                              }}
+                            >
+                              Send via Email App ✉
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </form>
