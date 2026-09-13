@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     const senderRole = (role || '').trim() || 'Role Opportunity';
     const senderDesc = (description || '').trim() || '';
 
-    // Forward to FormSubmit via server-side request (bypasses browser CORS & adblockers)
+    // Forward to FormSubmit via server-side request with full browser headers
     const formSubmitRes = await fetch('https://formsubmit.co/ajax/hariprasad8760@gmail.com', {
       method: 'POST',
       headers: {
@@ -17,13 +17,14 @@ export async function POST(req: Request) {
         Accept: 'application/json',
         Origin: 'http://localhost:3000',
         Referer: 'http://localhost:3000/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
       },
       body: JSON.stringify({
         name: senderName,
         role: senderRole,
         description: senderDesc,
         _subject: `Portfolio Inquiry: ${senderName} (${senderRole})`,
-        message: `Name: ${senderName}\nRole / Position: ${senderRole}\n\nDescription / Message:\n${senderDesc}`,
+        message: `Name: ${senderName}\nRole / Position: ${senderRole}\n\nDescription / Message:\n${senderDesc}\n\nSent via Portfolio Contact Form`,
         _template: 'table',
         _captcha: 'false',
       }),
@@ -37,10 +38,14 @@ export async function POST(req: Request) {
         message: 'Message sent successfully! Hariprasad will receive your email.',
       });
     } else {
+      const isActivation = data.message && typeof data.message === 'string' && data.message.toLowerCase().includes('activation');
       return NextResponse.json(
         {
           success: false,
-          message: data.message || 'Form submission failed on email gateway.',
+          needsActivation: isActivation,
+          message: isActivation
+            ? "FormSubmit sent an activation email to hariprasad8760@gmail.com. Please open your inbox and click 'Activate Form' once to start receiving messages!"
+            : (data.message || 'Form submission failed on email gateway.'),
         },
         { status: 400 }
       );

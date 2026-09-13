@@ -114,6 +114,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
   {
     category: 'Backend & Tools',
     items: [
+      { name: 'Springboot', icon: <span className="skill-tech-badge tag-text">SB</span> },
       { name: 'REST APIs', icon: <span className="skill-tech-badge tag-text">API</span> },
       { name: 'Database Architecture', icon: <span className="skill-tech-badge tag-text">DB</span> },
       { name: 'Git & GitHub Workflows', icon: <span className="skill-tech-badge tag-text">GIT</span> },
@@ -607,30 +608,79 @@ export default function PortfolioPage() {
     const senderDesc = formData.description.trim() || '';
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: senderName,
-          role: senderRole,
-          description: senderDesc,
-        }),
-      });
+      // 1. First attempt: server-side API route
+      let sentSuccess = false;
+      let statusMsg = '';
 
-      const data = await res.json();
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: senderName,
+            role: senderRole,
+            description: senderDesc,
+          }),
+        });
 
-      if (res.ok && data.success) {
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          sentSuccess = true;
+          statusMsg = data.message || 'Message sent successfully! Hariprasad will receive your details in his email.';
+        } else if (data?.needsActivation) {
+          setFormError(data.message);
+          return;
+        }
+      } catch {
+        // Server route failed or network issue; fall through to direct browser submission
+      }
+
+      // 2. Client-side browser fallback (if server route was blocked or errored)
+      if (!sentSuccess) {
+        try {
+          const directRes = await fetch('https://formsubmit.co/ajax/hariprasad8760@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              name: senderName,
+              role: senderRole,
+              description: senderDesc,
+              _subject: `Portfolio Inquiry: ${senderName} (${senderRole})`,
+              message: `Name: ${senderName}\nRole / Position: ${senderRole}\n\nDescription / Message:\n${senderDesc}\n\nSent via Portfolio Contact Form`,
+              _template: 'table',
+              _captcha: 'false',
+            }),
+          });
+
+          const directData = await directRes.json();
+          if (directData.success === 'true' || directData.success === true) {
+            sentSuccess = true;
+            statusMsg = 'Message sent successfully! Hariprasad will receive your details in his email.';
+          } else if (directData.message && directData.message.toLowerCase().includes('activation')) {
+            setFormError("FormSubmit sent a one-time activation email to hariprasad8760@gmail.com. Please click 'Activate Form' in your inbox once to receive live submissions!");
+            return;
+          }
+        } catch {
+          // Direct fallback also failed
+        }
+      }
+
+      if (sentSuccess) {
         setFormSent(true);
-        setFormNotice('✅ Message sent successfully! Hariprasad will receive your details in his email.');
+        setFormNotice(`✅ ${statusMsg}`);
         setFormData({ name: '', role: '', description: '' });
         setTimeout(() => setFormSent(false), 8000);
       } else {
-        setFormError(data.message || 'Unable to deliver message right now. Please try again.');
+        setFormError('Unable to deliver message automatically. Please reach out directly to hariprasad8760@gmail.com');
       }
     } catch {
-      setFormError('Network error while sending. Please try again.');
+      setFormError('Network error while sending. Please try again or email hariprasad8760@gmail.com directly.');
     } finally {
       setFormSubmitting(false);
     }
