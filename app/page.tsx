@@ -135,22 +135,14 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: 'PulseGuard AI',
-    category: 'AI Security & Computer Vision · Real-Time Deepfake Detection',
-    desc: 'Developing a secure video calling platform with real-time deepfake detection and liveness verification to distinguish genuine users from manipulated or spoofed faces. Designed a room-based video calling system with unique room codes, caller and receiver connections, and video call controls.',
-    tags: ['Python', 'Deep Learning', 'HTML/CSS/JS', 'WebRTC', 'AI Security'],
-    githubUrl: 'https://github.com/hariprasad8760-debug/PulseGuard',
-    metric: 'Real-Time Liveness',
-    image: '/projects/pulseguard.png',
-  },
-  {
-    title: 'Gig Worker',
-    category: 'Location-Based Platform · On-Demand Service Booking',
-    desc: 'Developed a mobile-friendly platform connecting customers with gig workers such as plumbers, carpenters, and drivers, enabling convenient service booking and location-based access. Integrated GPS location tracking, service booking, and image-based issue reporting to improve service accessibility and worker coordination.',
-    tags: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GPS Tracking'],
-    githubUrl: 'https://github.com/pavithran-creator/MobileApplicationForWorker',
-    metric: 'Location-Based Booking',
-    image: '/projects/gig-workers.png',
+    title: 'Digital ID',
+    category: 'Security & Verification · Identity Systems',
+    desc: 'Digital identity system for secure and easy user verification. Helps manage identity details digitally with better privacy, authentication flow, and accessibility.',
+    tags: ['Security', 'Full Stack', 'Verification', 'Privacy'],
+    githubUrl: 'https://github.com/hariprasad8760-debug/digital-id-main',
+    liveUrl: 'https://digital-id-steel.vercel.app/',
+    metric: 'Secure Verification',
+    image: '/projects/digital-id.png',
   },
   {
     title: 'ZENO AI',
@@ -161,16 +153,6 @@ const PROJECTS: Project[] = [
     liveUrl: 'https://zeno-ivory-mu.vercel.app/',
     metric: 'Multi-AI Powered',
     image: '/projects/zeno.png',
-  },
-  {
-    title: 'Digital ID',
-    category: 'Security & Verification · Identity Systems',
-    desc: 'Digital identity system for secure and easy user verification. Helps manage identity details digitally with better privacy, authentication flow, and accessibility.',
-    tags: ['Security', 'Full Stack', 'Verification', 'Privacy'],
-    githubUrl: 'https://github.com/hariprasad8760-debug/digital-id-main',
-    liveUrl: 'https://digital-id-steel.vercel.app/',
-    metric: 'Secure Verification',
-    image: '/projects/digital-id.png',
   },
   {
     title: 'Tracklytics',
@@ -188,6 +170,24 @@ const PROJECTS: Project[] = [
     tags: ['Next.js 15', 'TypeScript', 'Framer Motion', 'Tailwind & CSS'],
     githubUrl: 'https://github.com/hariprasad8760-debug/Portfolio-',
     metric: 'Clean Architecture',
+  },
+  {
+    title: 'PulseGuard AI',
+    category: 'AI Security & Computer Vision · Real-Time Deepfake Detection',
+    desc: 'Developing a secure video calling platform with real-time deepfake detection and liveness verification to distinguish genuine users from manipulated or spoofed faces. Designed a room-based video calling system with unique room codes, caller and receiver connections, and video call controls.',
+    tags: ['Python', 'Deep Learning', 'HTML/CSS/JS', 'WebRTC', 'AI Security'],
+    githubUrl: 'https://github.com/hariprasad8760-debug/PulseGuard',
+    metric: 'Real-Time Liveness',
+    image: '/projects/pulseguard.png',
+  },
+  {
+    title: 'Gig Worker',
+    category: 'Location-Based Platform · On-Demand Service Booking',
+    desc: 'Developed a mobile-friendly platform connecting customers with gig workers such as plumbers, carpenters, and drivers, enabling convenient service booking and location-based access. Integrated GPS location tracking, service booking, and image-based issue reporting to improve service accessibility and worker coordination.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GPS Tracking'],
+    githubUrl: 'https://github.com/pavithran-creator/MobileApplicationForWorker',
+    metric: 'Location-Based Booking',
+    image: '/projects/gig-workers.png',
   },
 ];
 
@@ -505,7 +505,7 @@ function InteractiveDevBadge() {
 
       {/* View Resume Button Outside Below the Status Bar */}
       <motion.a
-        href="/Hariprasad_P_Resume.pdf"
+        href="/Hariprasad_Resume.pdf?v=20261019"
         target="_blank"
         rel="noopener noreferrer"
         className="card-view-resume-btn"
@@ -770,7 +770,7 @@ export default function PortfolioPage() {
 
             {/* Resume button with download icon & animated shine */}
             <a
-              href="/Hariprasad_P_Resume.pdf"
+              href="/Hariprasad_Resume.pdf?v=20261019"
               download="Hariprasad_P_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
