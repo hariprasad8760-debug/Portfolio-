@@ -135,6 +135,34 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    title: 'PulseGuard AI',
+    category: 'AI Security & Computer Vision · Real-Time Deepfake Detection',
+    desc: 'Developing a secure video calling platform with real-time deepfake detection and liveness verification to distinguish genuine users from manipulated or spoofed faces. Designed a room-based video calling system with unique room codes, caller and receiver connections, and video call controls.',
+    tags: ['Python', 'Deep Learning', 'HTML/CSS/JS', 'WebRTC', 'AI Security'],
+    githubUrl: 'https://github.com/hariprasad8760-debug/PulseGuard',
+    metric: 'Real-Time Liveness',
+    image: '/projects/pulseguard.png',
+  },
+  {
+    title: 'Gig Worker',
+    category: 'Location-Based Platform · On-Demand Service Booking',
+    desc: 'Developed a mobile-friendly platform connecting customers with gig workers such as plumbers, carpenters, and drivers, enabling convenient service booking and location-based access. Integrated GPS location tracking, service booking, and image-based issue reporting to improve service accessibility and worker coordination.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'GPS Tracking'],
+    githubUrl: 'https://github.com/pavithran-creator/MobileApplicationForWorker',
+    metric: 'Location-Based Booking',
+    image: '/projects/gig-workers.png',
+  },
+  {
+    title: 'ZENO AI',
+    category: 'Artificial Intelligence · Full Stack Assistant',
+    desc: 'Built an AI assistant using a Spring Boot backend with Gemini API integration, supporting web-based interactions and browser extension functionality. Designed a clean, user-centric interface featuring intelligent chat, OCR screenshot capture, and workflow automation.',
+    tags: ['Java', 'Spring Boot', 'Gemini API', 'OCR', 'Browser Extension'],
+    githubUrl: 'https://github.com/hariprasad8760-debug/Zeno',
+    liveUrl: 'https://zeno-ivory-mu.vercel.app/',
+    metric: 'Multi-AI Powered',
+    image: '/projects/zeno.png',
+  },
+  {
     title: 'Digital ID',
     category: 'Security & Verification · Identity Systems',
     desc: 'Digital identity system for secure and easy user verification. Helps manage identity details digitally with better privacy, authentication flow, and accessibility.',
@@ -143,16 +171,6 @@ const PROJECTS: Project[] = [
     liveUrl: 'https://digital-id-steel.vercel.app/',
     metric: 'Secure Verification',
     image: '/projects/digital-id.png',
-  },
-  {
-    title: 'ZENO AI',
-    category: 'Artificial Intelligence · Full Stack Platform',
-    desc: 'Built a full-stack AI platform featuring intelligent chat, OCR, browser extension support, and multiple AI providers. Designed a clean, user-centric interface focused on productivity, automation, and a seamless user experience.',
-    tags: ['Next.js', 'Python', 'AI / OCR', 'Browser Extension'],
-    githubUrl: 'https://github.com/hariprasad8760-debug/Zeno',
-    liveUrl: 'https://zeno-ivory-mu.vercel.app/',
-    metric: 'Multi-AI Powered',
-    image: '/projects/zeno.png',
   },
   {
     title: 'Tracklytics',
