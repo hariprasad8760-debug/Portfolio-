@@ -318,17 +318,17 @@ function SilkyRibbonCanvas() {
 
         ctx.strokeStyle = color;
         ctx.lineWidth = 1.5;
-        ctx.shadowColor = 'rgba(230, 27, 77, 0.4)';
+        ctx.shadowColor = 'rgba(250, 204, 21, 0.45)';
         ctx.shadowBlur = 15;
         ctx.globalAlpha = alpha;
         ctx.stroke();
       };
 
       // 3 overlapping wine-red light streams (matching image backdrop waves)
-      drawRibbon(0.28, 45, 1.2, 0.35, 'rgba(230, 27, 77, 0.6)');
-      drawRibbon(0.32, 55, 0.9, 0.25, 'rgba(255, 59, 104, 0.5)');
-      drawRibbon(0.36, 40, 1.4, 0.2, 'rgba(160, 16, 50, 0.4)');
-      drawRibbon(0.75, 50, 1.0, 0.18, 'rgba(230, 27, 77, 0.3)');
+      drawRibbon(0.28, 45, 1.2, 0.35, 'rgba(250, 204, 21, 0.65)');
+      drawRibbon(0.32, 55, 0.9, 0.28, 'rgba(253, 224, 71, 0.55)');
+      drawRibbon(0.36, 40, 1.4, 0.22, 'rgba(217, 119, 6, 0.45)');
+      drawRibbon(0.75, 50, 1.0, 0.2, 'rgba(250, 204, 21, 0.35)');
 
       // Render subtle floating wine-red dots with soft outer glow
       for (let i = 0; i < redDots.length; i++) {
@@ -347,14 +347,14 @@ function SilkyRibbonCanvas() {
         // Soft outer ambient halo
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.radius * 3.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(230, 27, 77, ${currentAlpha * 0.2})`;
+        ctx.fillStyle = `rgba(250, 204, 21, ${currentAlpha * 0.22})`;
         ctx.fill();
 
         // Vivid glowing red dot core
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 45, 90, ${currentAlpha})`;
-        ctx.shadowColor = 'rgba(230, 27, 77, 0.85)';
+        ctx.fillStyle = `rgba(253, 224, 71, ${currentAlpha})`;
+        ctx.shadowColor = 'rgba(250, 204, 21, 0.9)';
         ctx.shadowBlur = 8;
         ctx.fill();
       }
@@ -1154,13 +1154,13 @@ export default function PortfolioPage() {
                 <div key={proj.title} className="project-tile">
                   <div>
                     <div className="project-top-spec">
-                      <span className="project-case-label">PROJECT 0{idx + 1}</span>
+                      <span className={`project-num-badge ${['badge-color-yellow', 'badge-color-blue', 'badge-color-green', 'badge-color-yellow', 'badge-color-blue', 'badge-color-green'][idx % 6]}`}>
+                        0{idx + 1}
+                      </span>
                       <span className="project-metric-tag">{proj.metric}</span>
                     </div>
+                    <p className="project-category-track">{proj.category}</p>
                     <h3 className="project-tile-title">{proj.title}</h3>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--wine-light)', marginBottom: '12px' }}>
-                      {proj.category}
-                    </p>
                     {proj.image && (
                       <div className="project-img-banner-wrap">
                         <img
@@ -1236,7 +1236,7 @@ export default function PortfolioPage() {
                       fontFamily: 'var(--font-mono)',
                       fontSize: '0.74rem',
                       color: 'var(--wine-light)',
-                      background: 'rgba(230,27,77,0.12)',
+                      background: 'rgba(250, 204, 21, 0.12)',
                       padding: '4px 12px',
                       borderRadius: '999px',
                       border: '1px solid var(--wine-border)',
@@ -1276,7 +1276,7 @@ export default function PortfolioPage() {
                       fontFamily: 'var(--font-mono)',
                       fontSize: '0.74rem',
                       color: 'var(--wine-light)',
-                      background: 'rgba(230,27,77,0.12)',
+                      background: 'rgba(250, 204, 21, 0.12)',
                       padding: '4px 12px',
                       borderRadius: '999px',
                       border: '1px solid var(--wine-border)',
@@ -1350,7 +1350,7 @@ export default function PortfolioPage() {
                                 : '#10b981',
                             background:
                               cert.badgeType === 'elite'
-                                ? 'rgba(230,27,77,0.15)'
+                                ? 'rgba(250, 204, 21, 0.15)'
                                 : cert.badgeType === 'project'
                                 ? 'rgba(56,189,248,0.12)'
                                 : 'rgba(16,185,129,0.1)',
